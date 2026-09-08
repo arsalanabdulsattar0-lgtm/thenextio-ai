@@ -1,0 +1,570 @@
+/* ==========================================================================
+   SERVICES SECTION — Asymmetric Bento Matrix & Holographic Telemetry
+   ========================================================================== */
+
+.services {
+  position: relative;
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+  background: var(--bg-0);
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* ── Ambient Background Atmosphere ── */
+.services__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.services__glow-1 {
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 87, 255, 0.25) 0%, transparent 68%);
+  filter: blur(120px);
+  transform: translate(50%, -50%);
+}
+
+.services__glow-2 {
+  position: absolute;
+  bottom: 25%;
+  left: 10%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(0, 194, 255, 0.15) 0%, transparent 70%);
+  filter: blur(130px);
+  transform: translate(-50%, 50%);
+}
+
+.services__grid-mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.14;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 20%, transparent 80%);
+}
+
+.services__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   HEADER & SYSTEM STATUS BAR
+   ========================================================================== */
+
+.services__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.services__status-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.services__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.12);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  font-size: 0.75rem;
+  font-family: monospace;
+  letter-spacing: 0.06em;
+  color: #00c2ff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.services__status-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(0, 194, 255, 0.08);
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  font-size: 0.75rem;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  color: #00c2ff;
+  font-weight: 600;
+}
+
+.services__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c2ff;
+  box-shadow: 0 0 8px #00c2ff;
+  animation: live-blink 1.8s infinite ease-in-out;
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+
+.services__headline-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.services__headline {
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-0);
+  max-width: 680px;
+}
+
+.services__headline-gradient {
+  background: linear-gradient(135deg, #0057ff 0%, #00c2ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mode Filter Switcher */
+.services__filters {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 9999px;
+  background: rgba(12, 25, 56, 0.85);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.services__filter-btn {
+  position: relative;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: color 200ms ease;
+  white-space: nowrap;
+}
+
+.services__filter-btn:hover {
+  color: var(--text-0);
+}
+
+.services__filter-btn--active {
+  color: var(--text-0);
+}
+
+.services__filter-bubble {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.25);
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  z-index: 0;
+}
+
+.services__filter-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   ASYMMETRIC BENTO MATRIX GRID
+   ========================================================================== */
+
+.services__bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+/* Base Bento Card */
+.services__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-radius: 20px;
+  background: rgba(12, 25, 56, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 300ms var(--ease-out-soft),
+              box-shadow 300ms var(--ease-out-soft),
+              transform 300ms var(--ease-out-soft);
+}
+
+.services__card:hover {
+  border-color: rgba(0, 194, 255, 0.35);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75),
+              0 0 45px rgba(0, 87, 255, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-5px);
+}
+
+.services__card--active {
+  border-color: #00c2ff;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.75),
+              0 0 50px rgba(0, 194, 255, 0.25),
+              inset 0 1px 0 rgba(0, 194, 255, 0.2);
+}
+
+/* Bento Column Spans */
+.services__card--span-7 { grid-column: span 7; }
+.services__card--span-5 { grid-column: span 5; }
+.services__card--span-4 { grid-column: span 4; }
+.services__card--span-12 { grid-column: span 12; }
+
+/* Subtle wireframe cyber-grid in card corner */
+.services__card-wireframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: radial-gradient(circle at top right, black 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Card Header */
+.services__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.services__icon-aura {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 87, 255, 0.15);
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  color: #00c2ff;
+  transition: all 300ms var(--ease-out-soft);
+}
+
+.services__card:hover .services__icon-aura {
+  background: linear-gradient(135deg, #0057ff, #00c2ff);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.45);
+  transform: scale(1.08);
+}
+
+.services__card-id {
+  font-family: monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.06em;
+}
+
+/* Card Content Body */
+.services__card-body {
+  margin-bottom: 1.75rem;
+}
+
+.services__card-title {
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  color: var(--text-0);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+.services__card-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-1);
+  margin-bottom: 1.25rem;
+}
+
+/* Tech Spec Badges */
+.services__specs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.services__spec-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(0, 87, 255, 0.12);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  color: #00c2ff;
+}
+
+/* Micro-Terminal / Widget inside Bento Card */
+.services__micro-terminal {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: rgba(6, 14, 30, 0.85);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #00c2ff;
+  margin-bottom: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+.services__terminal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.services__terminal-label {
+  color: var(--text-2);
+}
+
+.services__terminal-val {
+  color: #00c2ff;
+  font-weight: 600;
+}
+
+/* Card Footer CTA */
+.services__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.services__inspect-prompt {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.services__arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #00c2ff;
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.services__card:hover .services__arrow-btn {
+  color: var(--text-0);
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   HOLOGRAPHIC TELEMETRY INSPECTOR PANEL
+   ========================================================================== */
+
+.services__telemetry-panel {
+  position: relative;
+  width: 100%;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  border-radius: 20px;
+  background: rgba(12, 25, 56, 0.85);
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 60px rgba(0, 87, 255, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.services__telemetry-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.services__telemetry-badge {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #00c2ff;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.services__telemetry-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.services__telemetry-status {
+  font-size: 0.85rem;
+  color: var(--text-1);
+}
+
+/* Architecture Nodes Widget */
+.services__nodes-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.services__node-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(6, 14, 30, 0.7);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  font-family: monospace;
+  font-size: 0.78rem;
+}
+
+.services__node-status {
+  color: #00c2ff;
+  font-weight: 600;
+}
+
+/* Tech Stack Badges */
+.services__telemetry-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.services__stack-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-2);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.services__stack-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.services__stack-pill {
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.15);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-0);
+}
+
+.services__deploy-btn {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0057ff 0%, #00c2ff 100%);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  align-self: flex-start;
+  box-shadow: 0 4px 20px rgba(0, 87, 255, 0.35);
+}
+
+.services__deploy-btn:hover {
+  box-shadow: 0 0 25px rgba(0, 194, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .services__card--span-7,
+  .services__card--span-5 {
+    grid-column: span 6;
+  }
+
+  .services__card--span-4 {
+    grid-column: span 6;
+  }
+
+  .services__telemetry-panel {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .services__card--span-7,
+  .services__card--span-5,
+  .services__card--span-4,
+  .services__card--span-12 {
+    grid-column: span 12;
+  }
+
+  .services__headline-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .services__filters {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0.3rem;
+  }
+}

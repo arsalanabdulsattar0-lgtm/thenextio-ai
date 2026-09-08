@@ -1,0 +1,195 @@
+﻿/* ===================================================
+   ANALYSIS SECTION — Blueritt 1:1 Standard
+   =================================================== */
+
+.analysis-section {
+  position: relative;
+  background: #000917;
+  padding: 100px 0 90px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Ambient glows */
+.analysis-glow-left {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  filter: blur(180px);
+  background: rgba(255, 98, 0, 0.22);
+  top: -100px;
+  left: -280px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.analysis-glow-right {
+  position: absolute;
+  width: 750px;
+  height: 750px;
+  border-radius: 50%;
+  filter: blur(180px);
+  background: rgba(0, 76, 255, 0.25);
+  bottom: -200px;
+  right: -250px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.analysis-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+}
+
+/* Signature Blueritt Slate-to-Blue Gradient Text */
+.analysis-top-heading {
+  font-size: clamp(28px, 3.2vw, 50px);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 20px;
+  background: linear-gradient(90deg, #8E7C8B 0%, #1754C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.8px;
+}
+
+.analysis-main-heading {
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.18;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin: 0 0 32px;
+  letter-spacing: -0.6px;
+}
+
+/* CTA Card with Gradient Border */
+.analysis-cta-card {
+  padding: 26px 28px;
+  border-radius: 26px;
+  position: relative;
+  background: rgba(4, 15, 38, 0.75);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(4, 15, 38, 0.95), rgba(4, 15, 38, 0.95)) padding-box,
+    linear-gradient(90deg, #FF6200, rgba(255, 255, 255, 0.45)) border-box;
+  overflow: hidden;
+  display: inline-block;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.analysis-cta-card p {
+  color: #9AA6BF;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  font-weight: 300;
+  letter-spacing: -0.15px;
+}
+
+.analysis-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  background: #FF6200;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.analysis-btn:hover {
+  background: #FF7A26;
+  transform: translateX(3px);
+  color: #fff;
+}
+
+/* Right side: Pen Tool Curve & Huge Outlined Stat */
+.analysis-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+}
+
+.analysis-curve-wrap {
+  width: 100%;
+  max-width: 380px;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  pointer-events: none;
+}
+
+.analysis-curve-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.analysis-stats {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Huge stroked outlined number (Blueritt exact) */
+.analysis-stat-number {
+  font-size: clamp(100px, 14vw, 210px);
+  line-height: 0.88;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -8px;
+  color: transparent;
+  -webkit-text-stroke: 2px #FF6200;
+  text-shadow: 0 0 45px rgba(255, 98, 0, 0.45);
+  user-select: none;
+  font-family: inherit;
+}
+
+.analysis-stat-label {
+  color: #0E4BB5;
+  font-size: clamp(22px, 2.5vw, 36px);
+  font-weight: 600;
+  margin: 16px 0 0;
+  letter-spacing: -0.3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .analysis-row {
+    gap: 48px;
+  }
+  .analysis-visual {
+    min-height: 300px;
+  }
+  .analysis-stat-number {
+    font-size: 120px;
+    letter-spacing: -4px;
+    -webkit-text-stroke: 1.5px #FF6200;
+  }
+}
+
+@media (max-width: 576px) {
+  .analysis-section {
+    padding: 60px 0;
+  }
+  .analysis-cta-card {
+    width: 100%;
+  }
+  .analysis-stat-number {
+    font-size: 90px;
+    letter-spacing: -3px;
+  }
+  .analysis-stat-label {
+    font-size: 20px;
+  }
+}

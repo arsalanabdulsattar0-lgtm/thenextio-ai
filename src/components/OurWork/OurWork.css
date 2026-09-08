@@ -1,0 +1,526 @@
+﻿/* ===================================================
+   OUR WORK SECTION — Blueritt 1:1 VIP 3D Standard
+   =================================================== */
+
+.work-section {
+  position: relative;
+  background: radial-gradient(120% 90% at 50% 30%, rgba(21, 47, 99, 0.52) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  padding: 100px 0 110px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hero-Style Ambient Glows ── */
+.work-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(180px);
+  z-index: 0;
+}
+
+.work-glow-left {
+  width: 750px;
+  height: 750px;
+  background: rgba(255, 98, 0, 0.28);
+  top: 120px;
+  left: -280px;
+}
+
+.work-glow-right {
+  width: 800px;
+  height: 800px;
+  background: rgba(0, 76, 255, 0.32);
+  bottom: -150px;
+  right: -260px;
+}
+
+/* ── Header ── */
+.work-header {
+  margin-bottom: 36px;
+}
+
+.work-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.work-main-title {
+  color: #FFFFFF;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.12;
+  margin: 0 0 14px;
+  max-width: 680px;
+}
+
+.work-main-sub {
+  color: #9AA6BF;
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  max-width: 620px;
+  margin: 0;
+}
+
+/* ── Filter Pills ── */
+.work-filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.work-filter-btn {
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #9AA6BF;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.work-filter-btn:hover {
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.work-filter-btn.is-active {
+  background: rgba(255, 98, 0, 0.15);
+  border-color: #FF6200;
+  color: #FF6200;
+  box-shadow: 0 0 20px rgba(255, 98, 0, 0.25);
+}
+
+/* ── Quick Select Navigation Strip ── */
+.work-nav-strip {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 40px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none;
+}
+
+.work-nav-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.work-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: transparent;
+  border: 0;
+  color: #7A89A6;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.work-nav-num {
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  color: #FF6200;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 98, 0, 0.1);
+}
+
+.work-nav-item:hover {
+  color: #FFFFFF;
+}
+
+.work-nav-item.is-selected {
+  color: #FFFFFF;
+}
+
+.work-nav-underline {
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FF6200, #00D4FF);
+  box-shadow: 0 0 12px rgba(255, 98, 0, 0.6);
+}
+
+/* ===================================================
+   VIP 3D INTERACTIVE PROJECT STAGE
+   =================================================== */
+
+.work-3d-stage {
+  perspective: 1200px;
+  position: relative;
+  z-index: 3;
+}
+
+.work-3d-card {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1.5px solid rgba(93, 131, 197, 0.4);
+  background: radial-gradient(ellipse 95% 70% at 10% 20%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
+  box-shadow: 
+    0 30px 80px -10px rgba(0, 0, 0, 0.8),
+    0 0 60px -10px rgba(0, 87, 255, 0.25);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Mouse Glare */
+.work-3d-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Top Browser / Terminal Bar ── */
+.work-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: rgba(0, 9, 23, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  gap: 16px;
+}
+
+.work-mac-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.mac-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.mac-red { background: #FF5F56; }
+.mac-yellow { background: #FFBD2E; }
+.mac-green { background: #27C93F; }
+
+.work-url-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #7B8BA6;
+}
+
+.work-card-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #00F0FF;
+  letter-spacing: 0.5px;
+}
+
+.status-ping {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 10px #00F0FF;
+  animation: pingPulse 2s infinite ease-in-out;
+}
+
+@keyframes pingPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.4); }
+}
+
+/* ── Card Body (2-Column VIP Layout) ── */
+.work-card-body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  padding: 45px 50px 50px;
+  gap: 48px;
+  align-items: center;
+}
+
+/* ── Left Column ── */
+.work-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.work-cat-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #FF6200;
+  letter-spacing: 0.5px;
+}
+
+.work-num-pill {
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: #00F0FF;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.work-project-heading {
+  color: #FFFFFF;
+  font-size: clamp(26px, 2.8vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+
+.work-project-subhead {
+  color: #A0AEC0;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 18px;
+}
+
+.work-project-desc {
+  color: #9AA6BF;
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+
+/* Impact Box */
+.work-impact-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(255, 98, 0, 0.08);
+  border: 1px solid rgba(255, 98, 0, 0.25);
+  margin-bottom: 26px;
+}
+
+.impact-icon {
+  font-size: 16px;
+}
+
+.impact-text {
+  font-size: 13.5px;
+  color: #FFB380;
+  line-height: 1.45;
+}
+
+.impact-text strong {
+  color: #FF6200;
+  letter-spacing: 0.4px;
+}
+
+/* Metrics Grid */
+.work-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.work-metric-card {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.work-metric-val {
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: -0.5px;
+}
+
+.work-metric-lbl {
+  color: #718096;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* Tech Stack */
+.work-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.work-tech-pill {
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #CBD5E0;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+/* Actions */
+.work-card-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Right Column: 3D Holographic Visual with HUD ── */
+.work-col-visual {
+  position: relative;
+  transform: translateZ(30px);
+}
+
+.work-visual-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid rgba(93, 131, 197, 0.45);
+  box-shadow: 
+    0 25px 60px -10px rgba(0, 0, 0, 0.85),
+    0 0 50px -10px rgba(0, 87, 255, 0.3);
+  background: #000917;
+}
+
+.work-visual-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cyber Scanning Laser Animation */
+.work-laser-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #00F0FF 50%, #FF6200 100%);
+  box-shadow: 0 0 15px #00F0FF, 0 0 25px #FF6200;
+  animation: laserScan 4s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Floating 3D Telemetry HUD Badge */
+.work-hud-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: rgba(0, 9, 23, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  transform: translateZ(50px);
+}
+
+.hud-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+  animation: pingPulse 1.8s infinite ease-in-out;
+}
+
+/* Reticles */
+.work-reticle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  border-color: #00F0FF;
+  border-style: solid;
+}
+
+.reticle-tl {
+  top: 14px;
+  left: 14px;
+  border-width: 2px 0 0 2px;
+}
+
+.reticle-br {
+  bottom: 14px;
+  right: 14px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .work-card-body {
+    grid-template-columns: 1fr;
+    padding: 36px 28px;
+    gap: 36px;
+  }
+  .work-visual-img {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .work-section {
+    padding: 70px 0;
+  }
+  .work-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .work-card-topbar {
+    padding: 14px 18px;
+  }
+  .work-url-pill {
+    display: none;
+  }
+  .work-visual-img {
+    height: 220px;
+  }
+}

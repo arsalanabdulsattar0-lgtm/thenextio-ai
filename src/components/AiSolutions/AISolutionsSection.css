@@ -1,0 +1,555 @@
+/* ==========================================================================
+   AI SOLUTIONS COCKPIT — Interactive Command & Execution Matrix
+   ========================================================================== */
+
+.ai-cockpit {
+  position: relative;
+  padding-block: clamp(3.5rem, 6vw, 6rem);
+  background: var(--bg-0);
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* ── Dynamic Ambient Background ── */
+.ai-cockpit__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ai-cockpit__ambient-glow {
+  position: absolute;
+  width: 750px;
+  height: 750px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.22;
+  transition: background 800ms var(--ease-out-soft),
+              transform 800ms var(--ease-out-soft);
+  top: 30%;
+  right: 10%;
+  transform: translate(20%, -20%);
+}
+
+.ai-cockpit__neural-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px, 120px 120px, 120px 120px;
+  opacity: 0.18;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 85%);
+}
+
+.ai-cockpit__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   HEADER & TACTICAL STATUS HUD
+   ========================================================================== */
+
+.ai-cockpit__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.ai-cockpit__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ai-cockpit__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.12);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #00c2ff;
+  text-transform: uppercase;
+}
+
+.ai-cockpit__neural-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c2ff;
+  box-shadow: 0 0 10px #00c2ff;
+  animation: cockpit-blink 1.8s infinite ease-in-out;
+}
+
+@keyframes cockpit-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* Mini HUD Widgets */
+.ai-cockpit__hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ai-cockpit__hud-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(12, 25, 56, 0.75);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+.ai-cockpit__hud-val {
+  color: #00c2ff;
+  font-weight: 600;
+}
+
+.ai-cockpit__title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ai-cockpit__title {
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-0);
+  max-width: 720px;
+}
+
+.ai-cockpit__title-gradient {
+  background: linear-gradient(135deg, #0057ff 0%, #00c2ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ai-cockpit__subtitle {
+  font-size: 0.95rem;
+  color: var(--text-1);
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   INTERACTIVE COMMAND WORKSPACE (DUAL PANEL)
+   ========================================================================== */
+
+.ai-cockpit__workspace {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+/* ── Left Navigation Matrix ── */
+.ai-cockpit__selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ai-cockpit__tab-btn {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 16px;
+  background: rgba(12, 25, 56, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  text-align: left;
+  transition: all 250ms var(--ease-out-soft);
+  overflow: hidden;
+  outline: none;
+}
+
+.ai-cockpit__tab-btn:hover {
+  background: rgba(13, 31, 66, 0.85);
+  border-color: rgba(0, 194, 255, 0.3);
+  transform: translateX(4px);
+}
+
+.ai-cockpit__tab-btn--active {
+  background: rgba(12, 25, 56, 0.95);
+  border-color: var(--active-accent, #00c2ff);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 35px var(--active-glow, rgba(0, 194, 255, 0.25));
+}
+
+/* Vertical Active Neon Laser Indicator */
+.ai-cockpit__laser-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--active-accent, #00c2ff);
+  box-shadow: 0 0 14px var(--active-accent, #00c2ff);
+}
+
+.ai-cockpit__tab-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 87, 255, 0.15);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  color: #00c2ff;
+  flex-shrink: 0;
+  transition: all 250ms var(--ease-out-soft);
+}
+
+.ai-cockpit__tab-btn--active .ai-cockpit__tab-icon-wrap {
+  background: linear-gradient(135deg, #0057ff, #00c2ff);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.4);
+}
+
+.ai-cockpit__tab-info {
+  flex: 1;
+}
+
+.ai-cockpit__tab-tag {
+  font-family: monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  display: block;
+}
+
+.ai-cockpit__tab-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-0);
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+
+.ai-cockpit__tab-desc {
+  font-size: 0.8125rem;
+  color: var(--text-1);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   RIGHT STAGE — Holographic Showcase Stage
+   ========================================================================== */
+
+.ai-cockpit__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  border-radius: 24px;
+  background: rgba(12, 25, 56, 0.85);
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.ai-cockpit__stage-wireframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(circle at top right, black 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Stage Header */
+.ai-cockpit__stage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ai-cockpit__stage-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ai-cockpit__stage-badge {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--active-accent, #00c2ff);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-cockpit__stage-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--text-0);
+  letter-spacing: -0.02em;
+}
+
+.ai-cockpit__stage-mode-tag {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.15);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: var(--text-1);
+}
+
+/* ── Visual Architecture Node Diagram ── */
+.ai-cockpit__diagram {
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(6, 14, 30, 0.8);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+}
+
+.ai-cockpit__diagram-svg {
+  width: 100%;
+  height: 120px;
+  display: block;
+}
+
+/* ── Code / Payload Terminal ── */
+.ai-cockpit__terminal {
+  width: 100%;
+  border-radius: 14px;
+  background: rgba(6, 14, 30, 0.92);
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.ai-cockpit__terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.1rem;
+  background: rgba(12, 25, 56, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ai-cockpit__terminal-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ai-cockpit__terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.ai-cockpit__terminal-dot--red   { background: #E06C75; }
+.ai-cockpit__terminal-dot--yellow{ background: #E5C07B; }
+.ai-cockpit__terminal-dot--green { background: #98C379; }
+
+.ai-cockpit__terminal-file {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: var(--text-2);
+}
+
+.ai-cockpit__terminal-body {
+  padding: 1rem 1.25rem;
+  font-family: 'SF Mono', Consolas, 'Fira Code', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #D1D5DB;
+  max-height: 180px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ai-cockpit__cursor {
+  display: inline-block;
+  width: 7px;
+  height: 15px;
+  background: var(--active-accent, #00c2ff);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: cursor-blink 1s infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── Key Impact Metrics Bar ── */
+.ai-cockpit__metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  padding-block: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.75rem;
+}
+
+.ai-cockpit__metric-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ai-cockpit__metric-val {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: var(--active-accent, #00c2ff);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.ai-cockpit__metric-lbl {
+  font-size: 0.75rem;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* ── Action Bar ── */
+.ai-cockpit__action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ai-cockpit__deploy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0057ff 0%, #00c2ff 100%);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  box-shadow: 0 0 25px var(--active-glow, rgba(0, 194, 255, 0.4));
+}
+
+.ai-cockpit__deploy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px var(--active-glow, rgba(0, 194, 255, 0.6));
+}
+
+.ai-cockpit__docs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 9999px;
+  background: rgba(0, 87, 255, 0.15);
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  color: var(--text-0);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.ai-cockpit__docs-btn:hover {
+  background: rgba(0, 194, 255, 0.25);
+  border-color: rgba(0, 194, 255, 0.5);
+  color: #00c2ff;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .ai-cockpit__workspace {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .ai-cockpit__selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .ai-cockpit__selector {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-cockpit__metrics-bar {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ai-cockpit__action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ai-cockpit__deploy-btn,
+  .ai-cockpit__docs-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

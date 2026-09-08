@@ -1,0 +1,63 @@
+:root {
+  /* ---- Color (Blueritt Navy & Accent Palette) ---- */
+  --bg-0: #010b1d;
+  --bg-1: #060e1e;
+  --bg-2: #0c1938;
+  --bg-2-hover: #11234b;
+
+  --text-0: #FFFFFF;
+  --text-1: #94A3B8;
+  --text-2: #64748B;
+
+  --copper: #0057ff;
+  --copper-soft: rgba(0, 87, 255, 0.14);
+  --copper-line: rgba(0, 194, 255, 0.35);
+
+  --blue-accent: #0057ff;
+  --cyan: #00c2ff;
+  --orange-accent: #ff6a00;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(0, 194, 255, 0.2);
+
+  /* ---- Type ---- */
+  --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --size-eyebrow: 0.8125rem;
+  --size-body: 1.0625rem;
+  --size-body-lg: 1.1875rem;
+  --size-h3: clamp(1.5rem, 2vw, 1.875rem);
+  --size-h2: clamp(2.25rem, 4vw, 3.25rem);
+  --size-h1: clamp(2.75rem, 6.4vw, 6.25rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.2;
+  --lh-body: 1.65;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.09em;
+
+  /* ---- Layout ---- */
+  --container-max: 1400px;
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+  --nav-height: 84px;
+
+  /* ---- Motion ---- */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 220ms;
+  --dur-med: 480ms;
+  --dur-slow: 900ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

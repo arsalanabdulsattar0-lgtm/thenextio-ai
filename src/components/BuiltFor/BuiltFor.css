@@ -1,0 +1,475 @@
+/* ===================================================
+   BUILT-FOR SECTION — Blueritt 1:1 Standard
+   =================================================== */
+
+.bfor-section {
+  padding: 90px 0 70px;
+  background: #000917;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Hero-style soft navy gradient lift */
+.bfor-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 20% 35%, rgba(21, 47, 99, 0.45) 0%, rgba(0, 9, 23, 0) 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hero-style ambient glowing orbs */
+.bfor-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(180px);
+  z-index: 0;
+}
+
+.bfor-glow-left {
+  width: 650px;
+  height: 650px;
+  background: rgba(255, 98, 0, 0.28);
+  top: -150px;
+  left: -240px;
+}
+
+.bfor-glow-right {
+  width: 700px;
+  height: 700px;
+  background: rgba(0, 76, 255, 0.28);
+  bottom: -200px;
+  right: -240px;
+}
+
+/* Signature Hero Multi-Tone Gradient Text */
+.gradient-text {
+  background: linear-gradient(90deg, #00D4FF 0%, #7B61FF 50%, #FF6200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+/* ── Header ── */
+.bfor-header {
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.bfor-main-title {
+  color: #FFFFFF;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.12;
+  margin: 18px 0 16px;
+  max-width: 640px;
+}
+
+.bfor-main-sub {
+  color: #9AA6BF;
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* ── Item List ── */
+.bfor-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.bfor-item {
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 2;
+  transition: background 0.25s ease;
+}
+
+.bfor-item:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bfor-item.is-hovered {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.bfor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.bfor-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  flex: 1;
+}
+
+.bfor-num {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  padding-top: 4px;
+  min-width: 24px;
+}
+
+.bfor-text {
+  flex: 1;
+}
+
+.bfor-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.bfor-item-title {
+  color: #FFFFFF;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.bfor-item.is-hovered .bfor-item-title {
+  color: #FF6200;
+  transition: color 0.2s ease;
+}
+
+.bfor-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(255, 98, 0, 0.10);
+  border: 1px solid rgba(255, 98, 0, 0.3);
+  color: #FF6200;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.bfor-item-desc {
+  color: #9D9D9D;
+  font-size: clamp(14px, 1.2vw, 17px);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: -0.15px;
+  margin: 0;
+  max-width: 640px;
+}
+
+/* ── Right CTA button ── */
+.bfor-right {
+  flex-shrink: 0;
+}
+
+.bfor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  white-space: nowrap;
+}
+
+.bfor-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateX(3px);
+  color: #fff;
+}
+
+.bfor-btn svg {
+  transition: transform 0.25s;
+}
+
+.bfor-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ===================================================
+   FEATURE CARD SECTION — Blueritt feature-card-section standard
+   =================================================== */
+
+.fcard-section {
+  padding: 70px 0 90px;
+  background: #000917;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blueritt exact radial glows */
+.fcard-glow {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fcard-glow-left {
+  background: radial-gradient(circle, rgba(255, 89, 0, 0.47) 0%, transparent 70%);
+  left: -610px;
+  bottom: -550px;
+  z-index: 1;
+}
+
+.fcard-glow-right {
+  background: radial-gradient(circle, rgba(21, 93, 252, 0.47) 0%, transparent 70%);
+  right: -550px;
+  top: -550px;
+  z-index: 1;
+}
+
+/* Card wrapper (Blueritt exact) */
+.fcard-wrapper {
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1.5px solid rgba(93, 131, 197, 0.35);
+  background: radial-gradient(ellipse 86% 61% at 6% 14%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
+  position: relative;
+  z-index: 3;
+}
+
+.fcard-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 60px 70px 0;
+}
+
+/* Left content */
+.fcard-col-text {
+  padding-bottom: 60px;
+}
+
+/* Badge (Blueritt exact gradient border) */
+.fcard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#000917, #000917) padding-box,
+    linear-gradient(90deg, #0057FF, #FF6200) border-box;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 22px;
+  letter-spacing: -0.15px;
+}
+
+.fcard-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+  animation: badgePulse 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.fcard-heading {
+  color: #FFFFFF;
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin: 0 0 20px;
+}
+
+.fcard-para {
+  color: #9AA6BF;
+  font-size: clamp(15px, 1.2vw, 17px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  margin: 0 0 32px;
+  max-width: 460px;
+}
+
+/* Metrics bar */
+.fcard-metrics {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.fcard-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fcard-metric-val {
+  color: #FFFFFF;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.fcard-metric-lbl {
+  color: #6B7A99;
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+}
+
+.fcard-metric-sep {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.10);
+  flex-shrink: 0;
+}
+
+/* Action buttons */
+.fcard-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.fcard-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 28px;
+  height: 50px;
+  border-radius: 6px;
+  background: #FF6200;
+  border: 1px solid #FF6200;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.25s;
+  white-space: nowrap;
+}
+
+.fcard-btn-primary:hover {
+  background: #FF7A26;
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.fcard-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 28px;
+  height: 50px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  white-space: nowrap;
+}
+
+.fcard-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.38);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+/* Right: image */
+.fcard-col-media {
+  position: relative;
+  align-self: flex-end;
+}
+
+.fcard-media-frame {
+  position: relative;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 -20px 60px rgba(0, 76, 255, 0.20);
+}
+
+.fcard-media-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.fcard-media-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .fcard-inner {
+    grid-template-columns: 1fr;
+    padding: 48px 36px 0;
+  }
+
+  .bfor-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .bfor-btn {
+    align-self: flex-start;
+  }
+
+  .fcard-metrics {
+    gap: 18px;
+  }
+
+  .fcard-metric-val {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .bfor-section { padding: 60px 0 40px; }
+  .bfor-item-title { font-size: 22px; }
+  .bfor-left { flex-direction: column; gap: 12px; }
+  .fcard-inner { padding: 36px 24px 0; }
+  .fcard-heading { font-size: 24px; }
+  .fcard-actions { flex-direction: column; }
+  .fcard-btn-primary,
+  .fcard-btn-ghost { width: 100%; justify-content: center; }
+}

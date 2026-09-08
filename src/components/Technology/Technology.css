@@ -1,0 +1,515 @@
+/* ===================================================
+   TECHNOLOGY SECTION — Blueritt 1:1 VIP 3D Standard
+   =================================================== */
+
+.tech-section {
+  position: relative;
+  background: radial-gradient(120% 90% at 50% 30%, rgba(21, 47, 99, 0.55) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  padding: 100px 0 110px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hero-Style Ambient Glows ── */
+.tech-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(180px);
+  z-index: 0;
+}
+
+.tech-glow-left {
+  width: 750px;
+  height: 750px;
+  background: rgba(255, 98, 0, 0.28);
+  top: 100px;
+  left: -280px;
+}
+
+.tech-glow-right {
+  width: 800px;
+  height: 800px;
+  background: rgba(0, 76, 255, 0.32);
+  bottom: -150px;
+  right: -250px;
+}
+
+/* ── Header ── */
+.tech-header {
+  margin-bottom: 48px;
+}
+
+.tech-header-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 48px;
+  align-items: flex-end;
+  margin-top: 18px;
+}
+
+.tech-main-title {
+  color: #FFFFFF;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.tech-main-sub {
+  color: #9AA6BF;
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  margin: 0;
+}
+
+/* ── 2-Column Grid Layout ── */
+.tech-grid-layout {
+  display: grid;
+  grid-template-columns: 0.88fr 1.15fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ── Left Column: Interactive Domain Pillars ── */
+.tech-pillars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.tech-pillar-card {
+  position: relative;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.tech-pillar-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateX(4px);
+}
+
+.tech-pillar-card.is-active {
+  background: radial-gradient(ellipse at left, rgba(255, 98, 0, 0.12) 0%, rgba(10, 45, 130, 0.18) 100%);
+  border-color: rgba(255, 98, 0, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.tech-pillar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.tech-pillar-num {
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #FF6200;
+  font-weight: 700;
+}
+
+.tech-pillar-name {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  margin: 0;
+  flex: 1;
+}
+
+.tech-pillar-arrow {
+  color: #7A89A6;
+  font-size: 16px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.tech-pillar-card.is-active .tech-pillar-arrow {
+  transform: translateX(4px);
+  color: #FF6200;
+}
+
+.tech-pillar-tagline {
+  color: #8C99B2;
+  font-size: 13.5px;
+  margin: 0;
+  font-weight: 300;
+}
+
+.tech-pillar-active-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #FF6200;
+  box-shadow: 0 0 10px #FF6200;
+}
+
+.tech-actions-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===================================================
+   RIGHT COLUMN: 3D HOLOGRAPHIC STAGE (MOUSE TILT)
+   =================================================== */
+
+.tech-3d-stage {
+  perspective: 1200px;
+}
+
+.tech-3d-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 98, 0, 0.45);
+  background: 
+    radial-gradient(circle 500px at 10% 12%, rgba(255, 98, 0, 0.25) 0%, transparent 60%),
+    radial-gradient(circle 600px at 90% 85%, rgba(0, 76, 255, 0.3) 0%, transparent 65%),
+    radial-gradient(ellipse 95% 70% at 10% 20%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
+  box-shadow: 
+    0 30px 80px -10px rgba(0, 0, 0, 0.85),
+    0 0 50px -10px rgba(255, 98, 0, 0.35);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Mouse Glare */
+.tech-3d-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+/* Top Terminal Header */
+.tech-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(0, 9, 23, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.tech-terminal-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tdot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.tdot-red { background: #FF5F56; }
+.tdot-yellow { background: #FFBD2E; }
+.tdot-green { background: #27C93F; }
+
+.tech-terminal-title {
+  margin-left: 10px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #7B8BA6;
+}
+
+.tech-telemetry-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #00F0FF;
+  letter-spacing: 0.4px;
+}
+
+.tech-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+  animation: pingPulse 2s infinite ease-in-out;
+}
+
+/* Card Content */
+.tech-card-content {
+  padding: 34px 36px 36px;
+}
+
+/* Narrative */
+.tech-narrative-wrap {
+  margin-bottom: 24px;
+}
+
+.tech-badge-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: rgba(255, 98, 0, 0.12);
+  border: 1px solid rgba(255, 98, 0, 0.42);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #FF7A26;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 20px rgba(255, 98, 0, 0.25);
+}
+
+.tech-spec-heading {
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.18;
+  margin: 0 0 12px;
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFB078 45%, #FF6200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+.tech-spec-desc {
+  color: #9AA6BF;
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Live Architecture Layers Diagram */
+.tech-layers-diagram {
+  margin-bottom: 24px;
+  padding: 18px 22px;
+  border-radius: 16px;
+  background: rgba(0, 9, 23, 0.55);
+  border: 1px solid rgba(255, 98, 0, 0.25);
+  box-shadow: inset 0 0 30px rgba(255, 98, 0, 0.05);
+}
+
+.tech-diagram-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FF7A26;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.tech-layers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tech-layer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tech-layer-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tech-layer-pill {
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: #FF6200;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 98, 0, 0.12);
+}
+
+.tech-layer-name {
+  display: block;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tech-layer-tech {
+  display: block;
+  color: #7B8BA6;
+  font-size: 11.5px;
+}
+
+.tech-layer-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-layer-latency {
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #00F0FF;
+  font-weight: 600;
+}
+
+.tech-layer-status {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(39, 201, 63, 0.12);
+  border: 1px solid rgba(39, 201, 63, 0.3);
+  color: #27C93F;
+  font-weight: 600;
+}
+
+/* Interactive Code Snippet Window */
+.tech-code-box {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #020713;
+  border: 1px solid rgba(255, 98, 0, 0.28);
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tech-code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 18px;
+  background: linear-gradient(90deg, rgba(255, 98, 0, 0.14) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-bottom: 1px solid rgba(255, 98, 0, 0.22);
+}
+
+.tech-code-lang {
+  font-size: 10px;
+  font-weight: 700;
+  color: #FF6200;
+  letter-spacing: 0.6px;
+}
+
+.tech-code-label {
+  font-size: 11px;
+  color: #63708A;
+}
+
+.tech-code-pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #CBD5E0;
+}
+
+/* Verified Stack Badges */
+.tech-stack-wrap {
+  margin-bottom: 22px;
+}
+
+.tech-stack-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7B8BA6;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.tech-stack-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-badge-pill {
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #E2E8F0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Floating HUD Telemetry Bar */
+.tech-telemetry-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(0, 9, 23, 0.65);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+}
+
+.tech-telem-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.telem-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #00F0FF;
+  letter-spacing: 0.6px;
+}
+
+.telem-val {
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.tech-telem-sep {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .tech-header-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .tech-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tech-section {
+    padding: 70px 0;
+  }
+  .tech-card-content {
+    padding: 24px 20px;
+  }
+  .tech-layer-meta {
+    display: none;
+  }
+}

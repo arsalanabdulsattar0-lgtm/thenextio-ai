@@ -1,0 +1,141 @@
+﻿/* ===================================================
+   COMMON BUTTON COMPONENT — Blueritt 1:1 Standard
+   Smooth color fill animation on hover
+   =================================================== */
+
+.app-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #FFFFFF;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Content layer (above the background fill) ── */
+.app-btn-content {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.app-btn-text {
+  display: inline-block;
+  line-height: 1;
+}
+
+.app-btn-arrow {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+
+/* ── Sliding Background Fill Layer ── */
+.app-btn-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: translateY(102%);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+/* ── Fill Colors ── */
+.app-btn-fill-orange .app-btn-bg {
+  background: #FF6200;
+}
+
+.app-btn-fill-blue .app-btn-bg {
+  background: #0057FF;
+}
+
+.app-btn-fill-gradient .app-btn-bg {
+  background: linear-gradient(90deg, #FF6200 0%, #FF7A26 100%);
+}
+
+/* ── Hover State: Fill Color Slides In ── */
+.app-btn:hover {
+  border-color: rgba(255, 98, 0, 0.65);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.app-btn:hover .app-btn-bg {
+  transform: translateY(0%);
+}
+
+.app-btn-fill-orange:hover {
+  border-color: #FF6200;
+  box-shadow: 0 0 30px rgba(255, 98, 0, 0.35);
+}
+
+.app-btn-fill-blue:hover {
+  border-color: #0057FF;
+  box-shadow: 0 0 30px rgba(0, 87, 255, 0.35);
+}
+
+.app-btn:hover .app-btn-arrow {
+  transform: translateX(4px);
+}
+
+.app-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Variants ── */
+/* Ghost / Transparent default (User requested) */
+.app-btn-ghost {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+}
+
+/* Pill shape */
+.app-btn-pill {
+  border-radius: 100px;
+}
+
+/* Primary pre-filled */
+.app-btn-primary {
+  background: #FF6200;
+  border-color: #FF6200;
+  color: #FFFFFF;
+}
+
+.app-btn-primary .app-btn-bg {
+  background: #FF7A26;
+}
+
+.app-btn-primary:hover {
+  box-shadow: 0 0 30px rgba(255, 98, 0, 0.45);
+}
+
+/* ── Sizes ── */
+.app-btn-sm {
+  height: 38px;
+  padding: 0 18px;
+  font-size: 13.5px;
+}
+
+.app-btn-md {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 15px;
+}
+
+.app-btn-lg {
+  height: 52px;
+  padding: 0 30px;
+  font-size: 16px;
+}

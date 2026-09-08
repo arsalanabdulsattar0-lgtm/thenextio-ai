@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Blueritt UI Common Design System & Utility Styles
+   Source: Mirrored from Blueritt.com theme
+   ========================================================================== */
+
+/* ── Typography Gradients ── */
+.text-gradient-blueritt {
+  background: linear-gradient(135deg, #ffffff 0%, #00c2ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-orange {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-brand {
+  background: linear-gradient(90deg, #ff6a00 0%, #0057ff 50%, #00c2ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Reusable Buttons ── */
+.btn-blueritt-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #0057ff 0%, #00c2ff 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 87, 255, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-blueritt-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 194, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-blueritt-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  background: rgba(12, 25, 56, 0.6);
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-blueritt-outline:hover {
+  background: rgba(0, 87, 255, 0.15);
+  border-color: rgba(0, 194, 255, 0.6);
+  color: #00c2ff;
+  transform: translateY(-2px);
+}
+
+/* ── Card Surfaces & Containers ── */
+.blueritt-card {
+  background: rgba(12, 25, 56, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blueritt-card-glow:hover {
+  background: rgba(13, 31, 66, 0.85);
+  border-color: rgba(0, 194, 255, 0.35);
+  box-shadow: 0 10px 40px -10px rgba(0, 87, 255, 0.25);
+  transform: translateY(-4px);
+}
+
+/* ── Badges & Eyebrows ── */
+.blueritt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  background: rgba(0, 87, 255, 0.12);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+  color: #00c2ff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.blueritt-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c2ff;
+  box-shadow: 0 0 8px #00c2ff;
+}
+
+/* ── Background Ambient Lighting ── */
+.blueritt-bg-glow {
+  position: relative;
+}
+
+.blueritt-bg-glow::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(0, 87, 255, 0.15) 0%, rgba(255, 106, 0, 0.04) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}

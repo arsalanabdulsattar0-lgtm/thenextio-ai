@@ -1,0 +1,526 @@
+/* ===================================================
+   PROCESS SECTION — Blueritt 1:1 VIP 3D Standard
+   =================================================== */
+
+.process-section {
+  position: relative;
+  background: radial-gradient(120% 90% at 50% 30%, rgba(21, 47, 99, 0.55) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  padding: 100px 0 110px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Hero-Style Ambient Glows ── */
+.process-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(180px);
+  z-index: 0;
+}
+
+.process-glow-left {
+  width: 750px;
+  height: 750px;
+  background: rgba(255, 98, 0, 0.28);
+  top: 120px;
+  left: -280px;
+}
+
+.process-glow-right {
+  width: 800px;
+  height: 800px;
+  background: rgba(0, 76, 255, 0.32);
+  bottom: -150px;
+  right: -250px;
+}
+
+/* ── Header ── */
+.process-header {
+  margin-bottom: 40px;
+}
+
+.process-header-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 48px;
+  align-items: flex-end;
+  margin-top: 18px;
+}
+
+.process-main-title {
+  color: #FFFFFF;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.process-main-sub {
+  color: #9AA6BF;
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+  margin: 0;
+}
+
+/* ===================================================
+   MILESTONE STEPPER RAIL
+   =================================================== */
+
+.process-stepper-rail {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.process-step-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.process-step-node:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.process-step-node.is-active {
+  background: radial-gradient(ellipse at top left, rgba(255, 98, 0, 0.15) 0%, rgba(10, 45, 130, 0.2) 100%);
+  border-color: #FF6200;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.node-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.node-num {
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: #FF6200;
+}
+
+.node-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.process-step-node.is-active .node-dot {
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+}
+
+.node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.node-stage-lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #FF6200;
+  letter-spacing: 0.6px;
+}
+
+.node-title {
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+.process-step-node:not(.is-active) .node-title {
+  color: #9AA6BF;
+}
+
+.node-active-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF6200, #00F0FF);
+  box-shadow: 0 0 12px rgba(255, 98, 0, 0.6);
+}
+
+/* ===================================================
+   VIP 3D INTERACTIVE PROCESS STAGE (MOUSE TILT)
+   =================================================== */
+
+.process-3d-stage {
+  perspective: 1200px;
+}
+
+.process-3d-card {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 98, 0, 0.42);
+  background: 
+    radial-gradient(circle 500px at 10% 12%, rgba(255, 98, 0, 0.22) 0%, transparent 60%),
+    radial-gradient(circle 600px at 90% 85%, rgba(0, 76, 255, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 95% 70% at 10% 20%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
+  box-shadow: 
+    0 30px 80px -10px rgba(0, 0, 0, 0.85),
+    0 0 50px -10px rgba(255, 98, 0, 0.3);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Mouse Glare */
+.process-3d-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+/* Terminal Bar Header */
+.process-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 26px;
+  background: rgba(0, 9, 23, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.process-mac-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.pdot-red { background: #FF5F56; }
+.pdot-yellow { background: #FFBD2E; }
+.pdot-green { background: #27C93F; }
+
+.process-terminal-path {
+  margin-left: 12px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #7B8BA6;
+}
+
+.process-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #00F0FF;
+  letter-spacing: 0.5px;
+}
+
+.process-ping-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 8px #00F0FF;
+  animation: pingPulse 1.8s infinite ease-in-out;
+}
+
+/* ── Content Grid ── */
+.process-card-content {
+  padding: 44px 48px 48px;
+}
+
+.process-grid-body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Left Column: Narrative & Deliverables ── */
+.process-phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: rgba(255, 98, 0, 0.12);
+  border: 1px solid rgba(255, 98, 0, 0.4);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #FF7A26;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+  box-shadow: 0 0 20px rgba(255, 98, 0, 0.2);
+}
+
+.badge-sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.process-stage-heading {
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.18;
+  margin: 0 0 14px;
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFB078 45%, #FF6200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+.process-stage-desc {
+  color: #9AA6BF;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 24px;
+  font-weight: 300;
+}
+
+/* Deliverables Box */
+.process-deliverables-box {
+  margin-bottom: 26px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: rgba(0, 9, 23, 0.55);
+  border: 1px solid rgba(255, 98, 0, 0.22);
+  box-shadow: inset 0 0 30px rgba(255, 98, 0, 0.04);
+}
+
+.deliv-header-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FF7A26;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.deliv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deliv-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.deliv-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 98, 0, 0.2);
+  border: 1px solid #FF6200;
+  color: #FF6200;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.deliv-text {
+  color: #CBD5E1;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+/* Stage Metrics */
+.process-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.process-metric-card {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pmetric-val {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.pmetric-lbl {
+  color: #718096;
+  font-size: 11.5px;
+}
+
+.process-actions-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Right Column: Terminal & Verification ── */
+.process-terminal-window {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #020713;
+  border: 1px solid rgba(255, 98, 0, 0.28);
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.pterm-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: linear-gradient(90deg, rgba(255, 98, 0, 0.14) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-bottom: 1px solid rgba(255, 98, 0, 0.2);
+}
+
+.pterm-cmd-icon {
+  color: #FF6200;
+  font-weight: 800;
+}
+
+.pterm-cmd-text {
+  font-size: 12.5px;
+  font-family: 'Courier New', monospace;
+  color: #E2E8F0;
+}
+
+.pterm-logs {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pterm-log-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  color: #94A3B8;
+  line-height: 1.5;
+}
+
+.log-arrow {
+  color: #00F0FF;
+  font-weight: 700;
+}
+
+/* Verification Box */
+.process-verification-box {
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: rgba(0, 9, 23, 0.65);
+  border: 1px solid rgba(0, 240, 255, 0.22);
+}
+
+.verif-title {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #00F0FF;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.verif-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.verif-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.verif-shield {
+  font-size: 14px;
+}
+
+.verif-text {
+  color: #CBD5E1;
+  font-size: 12.5px;
+  flex: 1;
+}
+
+.verif-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(39, 201, 63, 0.12);
+  border: 1px solid rgba(39, 201, 63, 0.3);
+  color: #27C93F;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .process-header-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .process-stepper-rail {
+    grid-template-columns: 1fr;
+  }
+  .process-grid-body {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 576px) {
+  .process-section {
+    padding: 70px 0;
+  }
+  .process-card-content {
+    padding: 28px 20px;
+  }
+  .process-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

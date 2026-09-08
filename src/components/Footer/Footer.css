@@ -1,0 +1,561 @@
+/* ==================================================
+   SECTION 10 — FOOTER (VIP 3D CURTAIN REVEAL & BLUERITT THEME)
+   ================================================== */
+
+.footer-reveal-wrap {
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  background: #000917;
+  overflow: hidden;
+}
+
+.footer {
+  position: relative;
+  padding-top: clamp(4.5rem, 7vw, 7rem);
+  padding-bottom: clamp(2rem, 3.5vw, 3rem);
+  background: #000917;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* ==================================================
+   3D CYBER HORIZON BACKGROUND
+   ================================================== */
+
+.footer__cyber-grid-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.footer__cyber-grid-plane {
+  position: absolute;
+  bottom: -150px;
+  left: 50%;
+  transform: translateX(-50%) perspective(700px) rotateX(72deg);
+  width: 200%;
+  height: 650px;
+  background-image: 
+    linear-gradient(rgba(255, 98, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 76, 255, 0.08) 1px, transparent 1px);
+  background-size: 55px 55px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 85%);
+  opacity: 0.55;
+  animation: gridDrift 25s linear infinite;
+}
+
+@keyframes gridDrift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 55px;
+  }
+}
+
+.footer__ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  pointer-events: none;
+}
+
+.footer__ambient-glow--orange {
+  top: 15%;
+  right: 8%;
+  width: 500px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 98, 0, 0.16) 0%, transparent 70%);
+  opacity: 0.6;
+}
+
+.footer__ambient-glow--blue {
+  bottom: 5%;
+  left: 5%;
+  width: 600px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(0, 76, 255, 0.22) 0%, transparent 70%);
+  opacity: 0.5;
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==================================================
+   LARGE 3D HEADLINE BANNER
+   ================================================== */
+
+.footer__top-banner {
+  padding-bottom: clamp(2.5rem, 4vw, 3.8rem);
+  perspective: 1200px;
+  position: relative;
+}
+
+.footer__headline-3d-wrap {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  cursor: default;
+}
+
+.footer__headline {
+  font-size: clamp(3rem, 7.5vw, 6.8rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.28em;
+}
+
+.footer__headline-accent {
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFB078 42%, #FF6200 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 35px rgba(255, 98, 0, 0.45));
+}
+
+.footer__headline-glare {
+  position: absolute;
+  inset: -60px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+/* Laser Scanline Divider */
+.footer__laser-divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  overflow: hidden;
+}
+
+.footer__laser-pulse {
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #FF6200, #FFFFFF, #FF6200, transparent);
+  filter: drop-shadow(0 0 8px #FF6200);
+  animation: scanlinePulse 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scanlinePulse {
+  0% {
+    left: -25%;
+  }
+  50%, 100% {
+    left: 105%;
+  }
+}
+
+/* ==================================================
+   EDITORIAL VIP FOOTER GRID
+   ================================================== */
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr) minmax(0, 1.2fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: start;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__col-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.col-label-prefix {
+  color: #FF6200;
+}
+
+/* --- Brand Column --- */
+
+.footer__brand-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer__brand-title:hover {
+  opacity: 0.9;
+}
+
+.footer__brand-dot {
+  color: #FF6200;
+  text-shadow: 0 0 14px rgba(255, 98, 0, 0.7);
+}
+
+.footer__brand-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 98, 0, 0.08);
+  border: 1px solid rgba(255, 98, 0, 0.24);
+  margin-bottom: 1.25rem;
+  width: fit-content;
+}
+
+.brand-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00FF88;
+  box-shadow: 0 0 8px #00FF88;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+.brand-badge-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #FF8F3D;
+  text-transform: uppercase;
+}
+
+.footer__brand-desc {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 38ch;
+  margin: 0 0 1.75rem;
+}
+
+.footer__compliance-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.compliance-pill {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+/* --- Nav Column --- */
+
+.footer__nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer__nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  width: fit-content;
+  text-decoration: none;
+  position: relative;
+  padding: 0.2rem 0;
+}
+
+.footer__nav-arrow {
+  font-size: 0.8125rem;
+  color: #FF6200;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer__nav-link:hover {
+  color: #FFFFFF;
+  transform: translateX(4px);
+}
+
+.footer__nav-link:hover .footer__nav-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- CTA & Inquiries Column --- */
+
+.footer__email-card {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.footer__email-card:hover {
+  border-color: rgba(255, 98, 0, 0.35);
+  background: rgba(255, 98, 0, 0.03);
+}
+
+.footer__email-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__email-link:hover {
+  color: #FF8F3D;
+}
+
+.email-copy-icon {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #FF6200;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 98, 0, 0.1);
+  border: 1px solid rgba(255, 98, 0, 0.2);
+}
+
+.email-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.4rem;
+}
+
+.footer__cta-wrap {
+  margin-bottom: 1.75rem;
+}
+
+.footer__project-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 25px rgba(255, 98, 0, 0.15);
+}
+
+.footer__project-btn:hover {
+  box-shadow: 0 8px 35px rgba(255, 98, 0, 0.35);
+}
+
+/* Global Edge Telemetry */
+.footer__edge-telemetry {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.edge-telemetry-title {
+  display: block;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.6rem;
+}
+
+.edge-nodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.edge-node-item {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.6875rem;
+  gap: 0.5rem;
+}
+
+.node-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00FF88;
+  box-shadow: 0 0 6px #00FF88;
+}
+
+.node-name {
+  color: rgba(255, 255, 255, 0.6);
+  flex: 1;
+}
+
+.node-latency {
+  color: #FF8F3D;
+  font-weight: 600;
+}
+
+/* ==================================================
+   DIVIDER & BOTTOM ROW
+   ================================================== */
+
+.footer__bottom-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-top: clamp(3.5rem, 5.5vw, 5rem);
+  margin-bottom: 2rem;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.45);
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+}
+
+.footer__status-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00FF88;
+  box-shadow: 0 0 8px #00FF88;
+}
+
+.footer__bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer__legal {
+  font-size: 0.75rem;
+}
+
+.footer__back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.footer__back-to-top:hover {
+  background: #FF6200;
+  border-color: #FF6200;
+  box-shadow: 0 0 15px rgba(255, 98, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.top-arrow {
+  font-size: 0.8125rem;
+  transition: transform 0.2s ease;
+}
+
+.footer__back-to-top:hover .top-arrow {
+  transform: translateY(-2px);
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 991px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .footer__headline {
+    font-size: clamp(2.5rem, 8vw, 4.2rem);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__bottom-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

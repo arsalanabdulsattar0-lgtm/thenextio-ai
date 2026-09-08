@@ -1,0 +1,211 @@
+/* ===================================
+   FLOW FIELD 3D HERO STYLES (Thenextio Content)
+   =================================== */
+
+.flow-field-wrapper {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 80px 24px 40px;
+}
+
+.flow-field-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 3D stage centered in viewport */
+.flow-field-3d-stage {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Content block in center */
+.flow-field-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.6rem;
+  padding: 0 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Badge */
+.flow-field-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 100px;
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  background: rgba(0, 87, 255, 0.14);
+  color: #00c2ff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.flow-field-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6a00;
+  box-shadow: 0 0 8px #ff6a00, 0 0 16px rgba(255, 106, 0, 0.6);
+}
+
+/* Headline */
+.flow-field-headline {
+  font-size: clamp(3.2rem, 7.5vw, 6.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+
+/* Gradient accent on "next." */
+.flow-field-gradient-text {
+  background: linear-gradient(130deg, #ff6a00 0%, #0057ff 50%, #00c2ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  padding-bottom: 0.04em;
+}
+
+/* Sub-copy */
+.flow-field-sub {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 580px;
+  line-height: 1.65;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Actions */
+.flow-field-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.flow-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 32px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #ff6200;
+  border: 1px solid #ff6200;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(255, 98, 0, 0.45);
+  transition: all 0.25s ease;
+}
+
+.flow-btn-primary:hover {
+  background: #ff7a26;
+  border-color: #ff7a26;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255, 98, 0, 0.6);
+}
+
+.flow-arrow {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.flow-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.flow-btn-ghost:hover {
+  background: rgba(0, 194, 255, 0.12);
+  border-color: rgba(0, 194, 255, 0.65);
+  color: #00c2ff;
+  transform: translateY(-2px);
+}
+
+/* Trust line */
+.flow-field-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+}
+
+.flow-trust-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c2ff;
+  box-shadow: 0 0 8px #00c2ff;
+}
+
+@media (max-width: 640px) {
+  .flow-field-headline {
+    font-size: clamp(2.4rem, 10vw, 3.4rem);
+  }
+
+  .flow-field-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .flow-btn-primary,
+  .flow-btn-ghost {
+    width: 100%;
+  }
+}
