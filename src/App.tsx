@@ -3,8 +3,7 @@ import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import FlowField from './components/FlowField/FlowField'
 import About from './components/About/About'
-import BuiltFor from './components/BuiltFor/BuiltFor'
-import AnalysisSection from './components/Analysis/AnalysisSection'
+import ServicesSection from './components/Services/ServicesSection'
 import PlatformSection from './components/Platform/PlatformSection'
 import OurWork from './components/OurWork/OurWork'
 import Technology from './components/Technology/Technology'
@@ -50,20 +49,31 @@ export default function App() {
       <main>
         {view === 'home' ? (
           <>
-            {/* HOME: Blueritt-identical Rotating Dashboard Hero */}
+            {/* 1. HERO: Rotating Capabilities Dashboard (Includes Integrated Clients Logo Strip) */}
             <Hero />
+
+            {/* 2. ABOUT: 3D Stacking & Architecture Core */}
             <About />
-            <BuiltFor />
-            <AnalysisSection />
+
+            {/* 4. SERVICES: Unified 6-Module Technical Capabilities */}
+            <ServicesSection />
+
+            {/* 5. PRODUCTS: Enterprise AI & Cloud Product Platform */}
             <PlatformSection />
+
+            {/* 6. PROJECTS: Case Studies & Production Architectures */}
             <OurWork />
+
+            {/* 7. TECHNOLOGY & PROCESS */}
             <Technology />
             <Process />
+
+            {/* 8. CONTACT: Consultation & Project Scope */}
             <Contact />
           </>
         ) : (
           <>
-            {/* ABOUT: 3D FlowField Hero in Blueritt Theme */}
+            {/* ABOUT VIEW: 3D FlowField Experience */}
             <FlowField theme="blueritt" />
             <About />
             <Technology />

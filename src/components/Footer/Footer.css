@@ -14,8 +14,8 @@
   position: relative;
   padding-top: clamp(4.5rem, 7vw, 7rem);
   padding-bottom: clamp(2rem, 3.5vw, 3rem);
-  background: #000917;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(120% 90% at 50% 0%, rgba(21, 47, 99, 0.52) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
   overflow: hidden;
   will-change: transform, opacity;
 }

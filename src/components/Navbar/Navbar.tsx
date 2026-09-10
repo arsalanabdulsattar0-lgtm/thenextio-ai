@@ -10,13 +10,20 @@ export default function Navbar({ currentView = 'home', onNavigate }: NavbarProps
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const navItems = [
-    { label: 'Home', href: '#top', view: 'home' as const },
+  interface NavItem {
+    label: string
+    href: string
+    view?: 'home' | 'about'
+  }
+
+  const navItems: NavItem[] = [
+    { label: 'About', href: '#about', view: 'about' },
     { label: 'Services', href: '#services' },
+    { label: 'Products', href: '#products' },
     { label: 'Projects', href: '#projects' },
-    { label: 'About', href: '#about', view: 'about' as const },
+    { label: 'Technology', href: '#technology' },
+    { label: 'Process', href: '#process' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Blog', href: '#ai' },
   ]
 
   useEffect(() => {
@@ -43,13 +50,14 @@ export default function Navbar({ currentView = 'home', onNavigate }: NavbarProps
   }
 
   return (
-    <header className={`blueritt-header ${scrolled ? 'is-scrolled' : ''}`}>
-      <div className="container-fluid header-inner">
+    <header className={`modern-navbar ${scrolled ? 'is-scrolled' : ''}`}>
+      <div className="navbar-inner container">
+        
         {/* LOGO */}
-        <div className="header-brand-wrap">
+        <div className="navbar-brand">
           <a
             href="#top"
-            className="header-logo"
+            className="navbar-logo"
             onClick={(e) => {
               e.preventDefault()
               if (onNavigate) {
@@ -59,101 +67,94 @@ export default function Navbar({ currentView = 'home', onNavigate }: NavbarProps
               setMenuOpen(false)
             }}
           >
-            <span className="logo-text">
-              thenextio<span className="logo-accent">.ai</span>
+            <span className="logo-main">
+              thenextio<span className="logo-dot">.ai</span>
             </span>
           </a>
         </div>
 
-        {/* CENTER NAVIGATION */}
-        <nav className="header-nav" aria-label="Main Navigation">
-          <ul className="main-menu">
-            {navItems.map((item) => {
-              const isActive =
-                (item.view === 'home' && currentView === 'home') ||
-                (item.view === 'about' && currentView === 'about')
+        {/* MINIMAL RIGHT-ALIGNED NAVIGATION WITH PIPE SEPARATORS */}
+        <nav className="navbar-links-desktop" aria-label="Main Navigation">
+          {navItems.map((item, index) => {
+            const isActive =
+              (item.view === 'home' && currentView === 'home') ||
+              (item.view === 'about' && currentView === 'about')
 
-              return (
-                <li key={item.label} className={`menu-item ${isActive ? 'active' : ''}`}>
-                  <a
-                    href={item.href}
-                    onClick={(e) => {
-                      if (item.view && onNavigate) {
-                        e.preventDefault()
-                      }
-                      handleLinkClick(item)
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+            return (
+              <div key={item.label} className="nav-item-wrapper">
+                <a
+                  href={item.href}
+                  className={`nav-link ${isActive ? 'is-active' : ''}`}
+                  onClick={(e) => {
+                    if (item.view && onNavigate) {
+                      e.preventDefault()
+                    }
+                    handleLinkClick(item)
+                  }}
+                >
+                  {item.label}
+                </a>
+                {index < navItems.length - 1 && (
+                  <span className="nav-separator" aria-hidden="true">|</span>
+                )}
+              </div>
+            )
+          })}
         </nav>
 
-        {/* RIGHT ACTION BUTTON */}
-        <div className="header-actions">
-          <a href="#contact" className="header-btn signup-btn">
-            Start a project ↗
-          </a>
+        {/* MOBILE HAMBURGER BUTTON */}
+        <button
+          className={`navbar-toggle-btn ${menuOpen ? 'is-open' : ''}`}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
 
-          {/* Mobile hamburger */}
-          <button
-            className={`menu-toggle-btn ${menuOpen ? 'is-open' : ''}`}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
       </div>
 
       {/* MOBILE FULLSCREEN MENU */}
       {menuOpen && (
-        <div className="mobile-nav-drawer">
-          <div className="mobile-nav-top">
-            <span className="logo-text">
-              thenextio<span className="logo-accent">.ai</span>
+        <div className="navbar-mobile-drawer">
+          <div className="mobile-drawer-top">
+            <span className="logo-main">
+              thenextio<span className="logo-dot">.ai</span>
             </span>
             <button
-              className="mobile-nav-close"
+              className="mobile-drawer-close"
               onClick={() => setMenuOpen(false)}
               aria-label="Close menu"
             >
               ✕
             </button>
           </div>
-          <ul className="mobile-menu-list">
-            {navItems.map((item) => {
-              const isActive =
-                (item.view === 'home' && currentView === 'home') ||
-                (item.view === 'about' && currentView === 'about')
-
-              return (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className={isActive ? 'active' : ''}
-                    onClick={(e) => {
-                      if (item.view && onNavigate) {
-                        e.preventDefault()
-                      }
-                      handleLinkClick(item)
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              )
-            })}
+          <ul className="mobile-drawer-list">
+            {navItems.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  onClick={(e) => {
+                    if (item.view && onNavigate) {
+                      e.preventDefault()
+                    }
+                    handleLinkClick(item)
+                  }}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
-          <div className="mobile-nav-actions">
-            <a href="#contact" className="header-btn signup-btn" onClick={() => setMenuOpen(false)}>
-              Start a project ↗
+          <div className="mobile-drawer-footer">
+            <a 
+              href="#contact" 
+              className="mobile-cta-btn"
+              onClick={() => setMenuOpen(false)}
+            >
+              Get started ↗
             </a>
           </div>
         </div>

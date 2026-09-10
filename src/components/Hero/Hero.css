@@ -1,351 +1,955 @@
-/* ===================================
-   HERO SECTION — BLUERITT 1:1 REPLICA
-   =================================== */
+/* ==================================================
+   HERO SECTION (Screenshot 1:1 Layout + Blueritt Theme)
+   ================================================== */
 
-.hero-section.hero-r {
+.hero-section {
   position: relative;
-  padding: 140px 0 90px;
-  background: #000917;
-  overflow: hidden;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #000917;
+  padding: 120px 0 20px;
+  overflow: hidden;
 }
 
-/* Soft navy gradient lift (Blueritt exact) */
-.hero-r::before {
+/* Seamless bottom fade so glowing orbs gently blend into subsequent sections without hard edge */
+.hero-section::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(120% 90% at 18% 42%, rgba(21, 47, 99, 0.55) 0%, rgba(0, 9, 23, 0) 62%);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(0, 9, 23, 0) 0%, #000917 100%);
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
-/* ===================================
-   BACKGROUND BLUR (Blueritt exact)
-   =================================== */
+.hero-clients-integration {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
 
-.hero-blur {
+/* Atmospheric Ambient Glowing Orbs with bottom fade mask to eliminate hard cut */
+.hero-atmospheric-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
+}
+
+.hero-glow-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(180px);
-  z-index: 0;
+  filter: blur(140px);
   pointer-events: none;
 }
 
-.hero-blur-left {
+.hero-glow-orb--orange {
+  top: 15%;
+  right: 18%;
+  width: 550px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 98, 0, 0.22) 0%, transparent 70%);
+  opacity: 0.8;
+  animation: breatheOrange 8s ease-in-out infinite alternate;
+}
+
+.hero-glow-orb--blue {
+  top: 25%;
+  right: 5%;
   width: 650px;
-  height: 650px;
-  background: rgba(255, 98, 0, 0.35);
-  top: -250px;
-  left: -220px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(0, 76, 255, 0.28) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: breatheBlue 10s ease-in-out infinite alternate;
 }
 
-.hero-blur-right {
-  width: 700px;
-  height: 700px;
-  background: rgba(0, 76, 255, 0.35);
-  top: -180px;
-  right: -220px;
+@keyframes breatheOrange {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.7; }
+  100% { transform: scale(1.15) translate(-20px, 20px); opacity: 0.95; }
 }
 
-/* ===================================
-   CONTAINER & TWO-COLUMN ROW
-   =================================== */
+@keyframes breatheBlue {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+  100% { transform: scale(1.18) translate(30px, -20px); opacity: 0.85; }
+}
 
-.hero-r-container {
-  max-width: 1360px;
+.hero-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 32px;
-  position: relative;
-  z-index: 1;
-  width: 100%;
 }
 
-.hero-r-row {
+.hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
-  gap: 48px;
 }
 
-/* ===================================
-   COPY COLUMN
-   =================================== */
+/* ==================================================
+   LEFT COLUMN: TYPOGRAPHY, ACTIONS & TRUST STRIP
+   ================================================== */
 
-.hero-r-copy {
-  position: relative;
-  max-width: 580px;
+.hero-left-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.hero-r-texts {
-  margin-bottom: 34px;
-}
-
-.hero-top-badge {
+/* Pill Badge: AI + Business */
+.hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
-  border-radius: 100px;
-  background: rgba(0, 87, 255, 0.12);
-  border: 1px solid rgba(0, 162, 255, 0.35);
-  color: #00F0FF;
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  margin-bottom: 20px;
-  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 24px;
 }
 
-.hero-top-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #00F0FF;
-  box-shadow: 0 0 8px #00F0FF;
-}
-
-.hero-r-title {
-  color: #FFFFFF;
-  font-weight: 700;
-  font-size: clamp(32px, 4.4vw, 56px);
-  line-height: 1.15;
-  letter-spacing: -1.4px;
-  margin: 0 0 22px;
-}
-
-.hero-r-desc {
-  color: #9AA6BF;
-  font-weight: 300;
-  font-size: clamp(16px, 1.4vw, 18px);
-  line-height: 1.62;
-  letter-spacing: -0.3px;
-  margin: 0;
-  max-width: 460px;
-}
-
-/* ===================================
-   CTAS (Blueritt exact square-ish 6px)
-   =================================== */
-
-.hero-r-actions {
+.hero-badge-icon {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  color: #FF7A26;
+  filter: drop-shadow(0 0 6px rgba(255, 122, 38, 0.6));
+}
+
+.hero-badge-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.hero-badge-pill-live {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #00FF88;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 255, 136, 0.1);
+  margin-left: 4px;
+}
+
+/* Giant Main Title */
+.hero-title {
+  font-size: clamp(3rem, 5.6vw, 4.9rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  margin: 0 0 20px;
+  text-transform: none;
+}
+
+.hero-title-gradient {
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFB078 45%, #FF6200 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 35px rgba(255, 98, 0, 0.4));
+  display: inline-block;
+}
+
+/* Sub-headline / Description */
+.hero-description {
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 470px;
+  margin: 0 0 32px;
+  font-weight: 400;
+}
+
+/* Dual Actions: Primary Button + Secondary Explore Button */
+.hero-cta-wrap {
+  display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 38px;
 }
 
-.hero-r-btn {
+.hero-standard-btn {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 14px 28px;
+}
+
+.hero-btn-secondary {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 54px;
-  padding: 0 32px;
-  border-radius: 6px;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.2px;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.hero-r-btn-primary {
-  background: #FF6200;
-  border: 1px solid #FF6200;
-  color: #FFFFFF;
-}
-
-.hero-r-btn-primary:hover {
-  background: #FF7A26;
-  border-color: #FF7A26;
-  color: #FFFFFF;
-  transform: translateY(-3px);
-}
-
-.hero-r-btn-ghost {
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 98, 0, 0.4);
   color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.hero-r-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.42);
+.hero-btn-secondary svg {
+  transition: transform 0.2s ease;
+  color: #FF7A26;
+}
+
+.hero-btn-secondary:hover svg {
+  transform: translateY(2px);
+}
+
+/* Enterprise Trust & Metric Strip */
+.hero-trust-strip {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin-bottom: 22px;
+  width: fit-content;
+}
+
+.hero-metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-val {
+  font-size: 1.25rem;
+  font-weight: 800;
   color: #FFFFFF;
-  transform: translateY(-3px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-.hero-play-svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
+.metric-lbl {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 3px;
+  font-weight: 500;
 }
 
-/* ===================================
-   DOTS (Blueritt exact bars)
-   =================================== */
+.metric-separator {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+}
 
-.hero-r-dots {
+/* Supported Enterprise Stack Chips */
+.hero-stack-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 32px;
+  flex-wrap: wrap;
 }
 
-.hero-r-dot {
-  width: 28px;
+.stack-prefix {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.stack-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.stack-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chip-dot {
+  width: 4px;
   height: 4px;
-  padding: 0;
-  border: 0;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, 0.22);
-  cursor: pointer;
-  transition: background 0.3s ease, width 0.3s ease;
+  border-radius: 50%;
+  background: #FF7A26;
+  box-shadow: 0 0 5px #FF7A26;
 }
 
-.hero-r-dot:hover {
-  background: rgba(255, 255, 255, 0.45);
-}
+/* ==================================================
+   RIGHT COLUMN: 3D MODULAR CIRCUIT SCHEMATIC
+   ================================================== */
 
-.hero-r-dot.is-active {
-  width: 44px;
-  background: #FF6200;
-}
-
-/* ===================================
-   MEDIA COLUMN (3D Touch Video Showcase)
-   =================================== */
-
-.hero-r-media-wrap {
+.hero-right-stage {
   position: relative;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
   perspective: 1200px;
 }
 
-.hero-3d-stage {
+.hero-schematic-3d-wrap {
   position: relative;
   width: 100%;
+  max-width: 530px;
+  height: 460px;
   transform-style: preserve-3d;
-  will-change: transform;
-  cursor: default;
-}
-
-.hero-r-media {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(96, 165, 255, 0.35);
-  box-shadow: 
-    0 25px 60px -15px rgba(0, 0, 0, 0.7),
-    0 0 50px -10px rgba(0, 150, 255, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  background: #060B1E;
-  transform-style: preserve-3d;
-}
-
-.hero-video-box {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
-}
-
-.hero-r-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: contrast(1.05) saturate(1.1);
-}
-
-/* 3D Specular Dynamic Shine */
-.hero-3d-shine {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  mix-blend-mode: screen;
-  transition: background 0.15s ease-out;
-}
-
-/* Floating 3D HUD Badges */
-.hero-3d-hud {
-  position: absolute;
-  z-index: 3;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 100px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  justify-content: center;
+}
+
+/* SVG Circuit Wire Traces with Animated Laser Pulses */
+.schematic-circuit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  user-select: none;
-  transition: transform 0.2s ease;
+  z-index: 1;
 }
 
-.hero-3d-hud-top {
-  top: 18px;
-  left: 20px;
-  background: rgba(4, 15, 36, 0.75);
-  border-color: rgba(0, 220, 255, 0.3);
+.circuit-diamond {
+  filter: drop-shadow(0 0 6px #FF7A26);
 }
 
-.hero-3d-hud-bottom {
-  bottom: 18px;
-  right: 20px;
-  background: rgba(6, 12, 28, 0.82);
-  border-color: rgba(255, 98, 0, 0.3);
+.circuit-laser-pulse {
+  animation: laserPulseFlow 2.8s linear infinite;
 }
 
-.hero-hud-pulse {
-  width: 8px;
-  height: 8px;
+.laser-1 { animation-duration: 2.4s; }
+.laser-2 { animation-duration: 2s; animation-delay: 0.4s; }
+.laser-3 { animation-duration: 3s; animation-delay: 0.8s; }
+.laser-4 { animation-duration: 2.2s; animation-delay: 0.2s; }
+.laser-5 { animation-duration: 1.8s; animation-delay: 0.6s; }
+
+@keyframes laserPulseFlow {
+  0% { stroke-dashoffset: 60; opacity: 0.4; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px #FF7A26); }
+  100% { stroke-dashoffset: -60; opacity: 0.4; }
+}
+
+/* ── CENTRAL ROTATING PROCESSOR CHIP ── */
+.chip-center-module {
+  position: absolute;
+  top: 95px;
+  left: 205px;
+  width: 195px;
+  height: 195px;
+  z-index: 4;
+  transform: translateZ(45px);
+  transition: transform 0.3s ease;
+}
+
+.chip-substrate {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #0b1836 0%, #030e22 100%);
+  border: 2px solid rgba(255, 122, 38, 0.6);
+  box-shadow: 
+    0 18px 50px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(255, 98, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 4 Corner Screws */
+.chip-screw {
+  position: absolute;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #00F0FF;
-  box-shadow: 0 0 10px #00F0FF;
-  animation: hudPulse 1.8s infinite ease-in-out;
-  flex-shrink: 0;
+  background: #FF8F3D;
+  box-shadow: 0 0 6px #FF8F3D;
+  z-index: 3;
+}
+.chip-screw--tl { top: 12px; left: 12px; }
+.chip-screw--tr { top: 12px; right: 12px; }
+.chip-screw--bl { bottom: 12px; left: 12px; }
+.chip-screw--br { bottom: 12px; right: 12px; }
+
+/* Micro-dot matrix pattern */
+.chip-dot-matrix {
+  position: absolute;
+  inset: 14px;
+  background-image: radial-gradient(rgba(255, 150, 60, 0.22) 1.5px, transparent 1.5px);
+  background-size: 11px 11px;
+  opacity: 0.6;
 }
 
-@keyframes hudPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.4);
-    opacity: 0.5;
-  }
+/* Dynamic Rotating Inner Core */
+.chip-inner-core {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 600px;
+  padding: 16px;
 }
 
-.hero-hud-text {
-  color: #E2E8F0;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
+.chip-content-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  transform-style: preserve-3d;
 }
 
-.hero-hud-stat {
-  color: #CBD5E1;
-  font-size: 12.5px;
+.chip-mode-badge {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #FF8F3D;
+  background: rgba(255, 98, 0, 0.12);
+  border: 1px solid rgba(255, 122, 38, 0.3);
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.chip-mode-title {
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-shadow: 
+    0 2px 18px rgba(255, 98, 0, 0.8),
+    0 0 35px rgba(255, 122, 38, 0.5);
+}
+
+.chip-type-giant .chip-mode-title {
+  font-size: 52px;
+  letter-spacing: -2px;
+}
+
+.chip-type-medium .chip-mode-title {
+  font-size: 23px;
+  letter-spacing: -0.5px;
+}
+
+.chip-type-split .chip-mode-title {
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+
+.chip-mode-sub {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 5px;
   font-weight: 500;
-  letter-spacing: -0.1px;
+  letter-spacing: -0.01em;
+  max-width: 150px;
 }
 
+/* Silicon Notch Accents */
+.chip-edge-notch {
+  position: absolute;
+  background: #000917;
+  border: 1px solid rgba(255, 122, 38, 0.4);
+  z-index: 3;
+}
+.notch-left { left: -6px; top: 50%; transform: translateY(-50%); width: 10px; height: 32px; border-radius: 0 6px 6px 0; }
+.notch-right { right: -6px; top: 50%; transform: translateY(-50%); width: 10px; height: 32px; border-radius: 6px 0 0 6px; }
+.notch-top { top: -6px; left: 50%; transform: translateX(-50%); width: 32px; height: 10px; border-radius: 0 0 6px 6px; }
+.notch-bottom { bottom: -6px; left: 50%; transform: translateX(-50%); width: 32px; height: 10px; border-radius: 6px 6px 0 0; }
 
-/* ===================================
-   FLOATING RIGHT-EDGE TAB (Blueritt exact)
-   =================================== */
+/* Energy border shimmer */
+.chip-energy-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 28px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(135deg, rgba(255, 122, 38, 0.6), transparent 50%, rgba(0, 76, 255, 0.4)) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: rotateBorder 6s linear infinite;
+}
 
+@keyframes rotateBorder {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* ==================================================
+   ANIMATED SATELLITE MODULES WITH HUD TOOLTIPS
+   ================================================== */
+
+.node-module {
+  position: absolute;
+  background: rgba(4, 15, 38, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.node-module:hover {
+  border-color: rgba(255, 98, 0, 0.7);
+  box-shadow: 0 12px 35px rgba(255, 98, 0, 0.35);
+}
+
+/* HUD Hover Tooltip */
+.node-hud-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(0, 10, 26, 0.95);
+  border: 1px solid rgba(255, 122, 38, 0.5);
+  border-radius: 6px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 98, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 20;
+}
+
+.node-module:hover .node-hud-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.hud-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  color: #FF8F3D;
+  letter-spacing: 0.08em;
+}
+
+.hud-val {
+  font-size: 0.625rem;
+  color: #FFFFFF;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Node 1: Top Right 3D Crystal Gem with Continuous Spin */
+.node-crystal {
+  top: 90px;
+  right: 20px;
+  width: 78px;
+  height: 78px;
+  transform: translateZ(28px);
+  animation: floatOrbit1 6s ease-in-out infinite alternate;
+}
+
+.animated-crystal-spin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 14px rgba(255, 122, 38, 0.55));
+  animation: spinCrystal 10s ease-in-out infinite alternate;
+}
+
+@keyframes spinCrystal {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(18deg) scale(1.08); filter: drop-shadow(0 0 20px rgba(255, 98, 0, 0.8)); }
+  100% { transform: rotate(-14deg) scale(0.96); }
+}
+
+@keyframes floatOrbit1 {
+  0% { transform: translateZ(28px) translateY(0px); }
+  100% { transform: translateZ(28px) translateY(-8px); }
+}
+
+/* Node 2: Top Capsule Switch (00) with Alternating LED Scan */
+.node-capsule {
+  top: 50px;
+  right: 125px;
+  width: 50px;
+  height: 50px;
+  transform: translateZ(20px);
+  animation: floatOrbit2 5s ease-in-out infinite alternate;
+}
+
+.capsule-switch-body {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.capsule-slot {
+  width: 5px;
+  height: 16px;
+  border-radius: 999px;
+  background: #FF7A26;
+  box-shadow: 0 0 6px #FF7A26;
+}
+
+.animated-slot-1 {
+  animation: slotPulse 1.8s ease-in-out infinite alternate;
+}
+
+.animated-slot-2 {
+  animation: slotPulse 1.8s ease-in-out 0.9s infinite alternate;
+}
+
+@keyframes slotPulse {
+  0% { transform: scaleY(0.6); opacity: 0.4; background: #FF6200; }
+  100% { transform: scaleY(1.2); opacity: 1; background: #FFB078; box-shadow: 0 0 10px #FF7A26; }
+}
+
+@keyframes floatOrbit2 {
+  0% { transform: translateZ(20px) translateY(0px); }
+  100% { transform: translateZ(20px) translateY(6px); }
+}
+
+/* Node 3: Left Sliders with Animated Moving Knobs */
+.node-sliders {
+  top: 170px;
+  left: 85px;
+  width: 78px;
+  height: 78px;
+  padding: 12px;
+  flex-direction: column;
+  gap: 14px;
+  transform: translateZ(25px);
+  animation: floatOrbit3 7s ease-in-out infinite alternate;
+}
+
+.slider-track-row {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.slider-line {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+}
+
+.slider-knob {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #FF7A26;
+  box-shadow: 0 0 8px #FF7A26;
+}
+
+.animated-knob-1 {
+  animation: moveKnob1 3.5s ease-in-out infinite alternate;
+}
+
+.animated-knob-2 {
+  animation: moveKnob2 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes moveKnob1 {
+  0% { left: 10%; }
+  100% { left: 75%; }
+}
+
+@keyframes moveKnob2 {
+  0% { left: 70%; }
+  100% { left: 20%; }
+}
+
+@keyframes floatOrbit3 {
+  0% { transform: translateZ(25px) translateX(0px); }
+  100% { transform: translateZ(25px) translateX(-5px); }
+}
+
+/* Node 4: Bottom-Left Gear with Continuous 360 Rotation */
+.node-gear {
+  bottom: 75px;
+  left: 35px;
+  width: 78px;
+  height: 78px;
+  transform: translateZ(22px);
+  animation: floatOrbit4 6.5s ease-in-out infinite alternate;
+}
+
+.spinning-gear-icon {
+  animation: spinGear 12s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 38, 0.5));
+}
+
+@keyframes spinGear {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatOrbit4 {
+  0% { transform: translateZ(22px) translateY(0px); }
+  100% { transform: translateZ(22px) translateY(-7px); }
+}
+
+/* Node 5: Bottom-Left Concentric Aperture Rings (Counter-Rotating) */
+.node-aperture {
+  bottom: 70px;
+  left: 150px;
+  width: 78px;
+  height: 78px;
+  transform: translateZ(26px);
+  animation: floatOrbit5 5.5s ease-in-out infinite alternate;
+}
+
+.concentric-ring {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-outer {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 98, 0, 0.12);
+  border: 1px dashed rgba(255, 98, 0, 0.4);
+}
+
+.animated-ring-outer {
+  animation: spinOuter 14s linear infinite;
+}
+
+.ring-mid {
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 98, 0, 0.35);
+  border: 1px solid rgba(255, 122, 38, 0.6);
+}
+
+.animated-ring-mid {
+  animation: spinMid 8s linear infinite reverse;
+}
+
+.ring-core {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #FFB078 0%, #FF6200 100%);
+  box-shadow: 0 0 14px rgba(255, 98, 0, 0.85);
+}
+
+.animated-ring-core {
+  animation: pulseCore 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes spinOuter {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinMid {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseCore {
+  0% { transform: scale(0.85); box-shadow: 0 0 8px rgba(255, 98, 0, 0.5); }
+  100% { transform: scale(1.15); box-shadow: 0 0 18px rgba(255, 98, 0, 1); }
+}
+
+@keyframes floatOrbit5 {
+  0% { transform: translateZ(26px) translateY(0px); }
+  100% { transform: translateZ(26px) translateY(6px); }
+}
+
+/* Node 6: Bottom-Right Cyber Vision Eye with Scanning Radar Line */
+.node-vision {
+  bottom: 80px;
+  right: 20px;
+  width: 78px;
+  height: 78px;
+  transform: translateZ(24px);
+  animation: floatOrbit6 6s ease-in-out infinite alternate;
+}
+
+.vision-eye-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.vision-eye-svg {
+  filter: drop-shadow(0 0 10px rgba(255, 98, 0, 0.6));
+  animation: eyeBlink 5s ease-in-out infinite;
+}
+
+.vision-radar-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #FF7A26);
+  transform-origin: 0% 50%;
+  animation: radarScan 3s linear infinite;
+}
+
+@keyframes radarScan {
+  0% { transform: rotate(0deg); opacity: 0.8; }
+  100% { transform: rotate(360deg); opacity: 0.8; }
+}
+
+@keyframes eyeBlink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes floatOrbit6 {
+  0% { transform: translateZ(24px) translateY(0px); }
+  100% { transform: translateZ(24px) translateY(-5px); }
+}
+
+/* Dynamic Holographic Cursor Glare */
+.schematic-cursor-glare {
+  position: absolute;
+  inset: -40px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 5;
+  transition: opacity 0.25s ease;
+}
+
+/* ── INTERACTIVE CAPABILITY MODE SELECTOR DOCK ── */
+.schematic-mode-dock {
+  margin-top: 14px;
+  width: 100%;
+  max-width: 530px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dock-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dock-dot-live {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00FF88;
+  box-shadow: 0 0 6px #00FF88;
+}
+
+.dock-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.dock-chips-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dock-chip-btn {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.dock-chip-btn:hover {
+  background: rgba(255, 98, 0, 0.12);
+  border-color: rgba(255, 98, 0, 0.4);
+  color: #FFFFFF;
+}
+
+.dock-chip-btn.is-active {
+  background: linear-gradient(135deg, rgba(255, 98, 0, 0.25) 0%, rgba(224, 77, 0, 0.35) 100%);
+  border-color: #FF7A26;
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 98, 0, 0.4);
+}
+
+/* Floating Ask TheNextIO Right-Edge Tab */
 .ask-tab {
   position: fixed;
   right: 0;
@@ -366,11 +970,13 @@
   z-index: 100;
   box-shadow: -4px 0 20px rgba(255, 98, 0, 0.35);
   transition: transform 0.25s ease, background 0.25s ease;
+  text-decoration: none;
 }
 
 .ask-tab:hover {
   background: #FF7A26;
   transform: translateY(-50%) translateX(-4px);
+  color: #FFFFFF;
 }
 
 .ask-tab-icon {
@@ -383,45 +989,59 @@
   transform: rotate(180deg);
 }
 
-/* ===================================
-   RESPONSIVE (Blueritt exact breakpoints)
-   =================================== */
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
 
 @media (max-width: 991px) {
-  .hero-section.hero-r {
-    padding: 120px 0 70px;
+  .hero-section {
+    padding: 110px 0 60px;
   }
 
-  .hero-r-row {
+  .hero-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
-  .hero-r-copy {
-    max-width: 100%;
+  .hero-title {
+    font-size: clamp(2.6rem, 7.5vw, 4rem);
   }
 
-  .hero-r-desc {
-    max-width: 100%;
+  .hero-trust-strip {
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .ask-tab {
-    display: none;
+  .hero-right-stage {
+    min-height: 440px;
+  }
+
+  .hero-schematic-3d-wrap {
+    transform: scale(0.85) !important;
   }
 }
 
-@media (max-width: 575px) {
-  .hero-r-title {
-    font-size: 32px;
+@media (max-width: 576px) {
+  .hero-schematic-3d-wrap {
+    transform: scale(0.72) !important;
   }
 
-  .hero-r-actions {
+  .hero-cta-wrap {
+    width: 100%;
     flex-direction: column;
     align-items: stretch;
   }
 
-  .hero-r-btn {
-    width: 100%;
+  .hero-btn-secondary {
     justify-content: center;
+  }
+
+  .hero-trust-strip {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .metric-val {
+    font-size: 1.05rem;
   }
 }

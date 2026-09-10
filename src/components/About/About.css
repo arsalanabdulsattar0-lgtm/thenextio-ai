@@ -1,24 +1,50 @@
-/* ===================================
-   ABOUT SECTION (WHO WE ARE) — BLUERITT 1:1 REPLICA
-   =================================== */
+/* ===================================================
+   ABOUT SECTION — HANDCRAFTED BESPOKE ARCHITECTURE
+   Text Scroll Reveal + 3-Way Convergence (Left/Bottom/Right)
+   =================================================== */
 
-.about-section {
+.about-scroll-track {
   position: relative;
-  padding: 110px 0 100px;
-  background: #000917;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  height: 230vh;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(21, 47, 99, 0.52) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* ===================================
-   BACKGROUND AMBIENT GLOWS (Blueritt exact)
-   =================================== */
+.about-sticky-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: clamp(14px, 2.5vh, 28px) 0;
+}
+
+.about-stage-container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ===================================================
+   BACKGROUND AMBIENT ATMOSPHERIC GLOWS
+   =================================================== */
 
 .about-glow {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(170px);
+  filter: blur(190px);
   z-index: 0;
 }
 
@@ -26,50 +52,56 @@
   width: 750px;
   height: 750px;
   left: -320px;
-  bottom: -200px;
-  background: radial-gradient(circle, rgba(255, 89, 0, 0.28) 0%, transparent 70%);
+  bottom: -150px;
+  background: radial-gradient(circle, rgba(255, 89, 0, 0.20) 0%, transparent 70%);
 }
 
 .about-glow-right {
   width: 800px;
   height: 800px;
   right: -320px;
-  top: -150px;
-  background: radial-gradient(circle, rgba(21, 93, 252, 0.28) 0%, transparent 70%);
+  top: -120px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.22) 0%, transparent 70%);
 }
 
-.about-container {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 32px;
-  position: relative;
-  z-index: 1;
+.about-glow-center {
+  width: 700px;
+  height: 380px;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(0, 194, 255, 0.10) 0%, transparent 70%);
 }
 
-/* ===================================
-   TOP SECTION TAG (Blueritt exact)
-   =================================== */
+/* ===================================================
+   1. CINEMATIC KINETIC TEXT HEADER
+   =================================================== */
 
 .about-header-wrap {
-  margin-bottom: 55px;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto 12px;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .section-tag {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 6px 20px;
-  border: 1px solid #ff6200;
+  gap: 8px;
+  padding: 4px 15px;
+  border: 1px solid rgba(255, 98, 0, 0.75);
   border-radius: 100px;
   background: rgba(255, 98, 0, 0.08);
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .section-tag span {
   color: #ff5900;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.2px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.9px;
 }
 
 .section-tag strong {
@@ -77,404 +109,476 @@
   font-weight: 700;
 }
 
-/* ===================================
-   TITLE & DESCRIPTION
-   =================================== */
-
 .about-title {
   color: #ffffff;
-  font-size: clamp(30px, 3.8vw, 50px);
+  font-size: clamp(26px, 2.9vw, 42px);
   line-height: 1.18;
   font-weight: 700;
-  letter-spacing: -1.2px;
-  margin: 0 0 20px;
-  max-width: 900px;
+  letter-spacing: -1px;
+  margin: 0 0 10px;
+  text-wrap: balance;
+}
+
+/* Kinetic Word Reveal */
+.about-reveal-word {
+  display: inline-block;
+  will-change: opacity, transform;
+  margin-right: 0.25em;
+  color: #ffffff;
+  transition: color 0.2s ease;
+}
+
+.about-reveal-word.word-accent {
+  background: linear-gradient(135deg, #00c2ff 0%, #7db5ff 60%, #ff8c42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 20px rgba(0, 194, 255, 0.25));
 }
 
 .about-description {
-  color: #9aa6bf;
-  font-size: clamp(16px, 1.2vw, 19px);
-  line-height: 1.68;
-  letter-spacing: -0.2px;
-  margin: 0;
+  color: #8da3c2;
+  font-size: clamp(13.5px, 0.98vw, 15.5px);
+  line-height: 1.55;
+  margin: 0 auto;
   max-width: 780px;
+  letter-spacing: -0.2px;
+  will-change: opacity, transform;
 }
 
-/* Blueritt signature orange underline */
 .about-description span {
   position: relative;
   color: #ffffff;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .about-description span::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: -2px;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background: #ff6200;
   border-radius: 2px;
 }
 
-/* ===================================
-   STATS ROW — BLUERITT RADIAL GRADIENT CARDS
-   =================================== */
+/* ===================================================
+   2. INTERACTIVE 3D CONVERGENCE STAGE
+   =================================================== */
 
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-bottom: 70px;
-}
-
-.stats-card {
-  border-radius: 26px;
-  padding: 44px 32px;
-  background: radial-gradient(ellipse 86% 61% at 6% 14%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
-  border: 1.5px solid rgba(93, 131, 197, 0.35);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  text-align: center;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
-}
-
-.stats-card:hover {
-  border-color: rgba(0, 194, 255, 0.6);
-  box-shadow: 0 25px 70px rgba(0, 87, 255, 0.35);
-}
-
-.stats-card h3 {
-  color: #ffffff;
-  font-size: clamp(42px, 3.8vw, 56px);
-  line-height: 1;
-  font-weight: 700;
-  margin: 0 0 10px;
-  letter-spacing: -0.8px;
-}
-
-.stats-card p {
-  color: #a2a2a2;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  letter-spacing: -0.2px;
-}
-
-/* ===================================
-   DUAL-COLUMN ARCHITECTURE & PILLARS
-   =================================== */
-
-.about__grid {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  align-items: center;
-  gap: 50px;
-}
-
-/* 3D Visual Sculpture */
-.about__visual-wrap {
+.about-map-viewport {
   position: relative;
   width: 100%;
-  height: 480px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   perspective: 1200px;
+  margin-top: 4px;
 }
 
-.about__sculpture {
+.about-map-stage {
   position: relative;
-  width: 360px;
-  height: 400px;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Central Hub Pod ── */
+.about-neural-core {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
-  cursor: pointer;
+  z-index: 5;
+  will-change: transform, opacity;
 }
 
-/* Gyro Orbit Rings in Orange & Blue */
-.about__ring {
+.core-orbit {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
 }
 
-.about__ring--1 {
-  width: 350px;
-  height: 350px;
-  border: 1.5px solid rgba(255, 98, 0, 0.35);
-  animation: about-spin 28s linear infinite;
+.core-orbit-1 {
+  width: 140px;
+  height: 140px;
+  border: 1px solid rgba(255, 98, 0, 0.32);
+  animation: coreSpin 26s linear infinite;
 }
 
-.about__ring--2 {
-  width: 400px;
-  height: 400px;
-  border: 1.5px solid rgba(0, 87, 255, 0.45);
-  border-style: dashed;
-  animation: about-spin 36s linear infinite reverse;
+.core-orbit-2 {
+  width: 165px;
+  height: 165px;
+  border: 1px dashed rgba(0, 194, 255, 0.40);
+  animation: coreSpin 34s linear infinite reverse;
 }
 
-@keyframes about-spin {
+@keyframes coreSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
-/* Core Card in Blueritt Radial Gradient */
-.about__core-card {
+.core-pod {
   position: relative;
-  width: 310px;
-  padding: 1.75rem 1.6rem;
-  border-radius: 22px;
-  background: radial-gradient(ellipse 86% 61% at 6% 14%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
-  border: 1.5px solid rgba(93, 131, 197, 0.4);
-  box-shadow:
-    0 24px 64px -12px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(0, 87, 255, 0.2);
-  transform-style: preserve-3d;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 8px 20px;
+  border-radius: 100px;
+  background: rgba(3, 13, 36, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 194, 255, 0.35);
+  box-shadow: 0 0 35px rgba(0, 110, 255, 0.22), inset 0 0 14px rgba(0, 194, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
-.about__core-card:hover {
-  border-color: rgba(0, 194, 255, 0.6);
-  box-shadow:
-    0 32px 80px -12px rgba(0, 0, 0, 0.8),
-    0 0 50px rgba(0, 194, 255, 0.35);
-}
-
-.about__core-header {
+.core-pod-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.3rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 7px;
 }
 
-.about__core-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #00c2ff;
-}
-
-.about__core-dot {
-  width: 6px;
-  height: 6px;
+.core-badge-dot {
+  width: 6.5px;
+  height: 6.5px;
   border-radius: 50%;
-  background: #ff6a00;
-  box-shadow: 0 0 8px #ff6a00;
-  animation: pulse-dot 2s infinite ease-in-out;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+  animation: beaconPulse 2s ease-in-out infinite alternate;
 }
 
-@keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(1.4); opacity: 0.6; }
+@keyframes beaconPulse {
+  0%   { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.25); opacity: 1; }
 }
 
-.about__core-ver {
-  font-size: 0.72rem;
-  color: #9aa6bf;
-  font-family: monospace;
-}
-
-/* Graphs */
-.about__core-graph {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-
-.about__graph-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.about__graph-track {
-  flex: 1;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  position: relative;
-}
-
-.about__graph-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #ff6a00 0%, #0057ff 60%, #00c2ff 100%);
-}
-
-.about__graph-val {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #ffffff;
-  font-family: monospace;
-  min-width: 32px;
-  text-align: right;
-}
-
-/* Telemetry pill */
-.about__telemetry-pill {
-  position: absolute;
-  bottom: -18px;
-  right: -18px;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 1.1rem;
-  border-radius: 9999px;
-  background: #020e26;
-  border: 1px solid rgba(0, 194, 255, 0.4);
-  box-shadow:
-    0 16px 36px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(0, 87, 255, 0.25);
-  transform: translateZ(40px);
-}
-
-.about__telemetry-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #00c2ff;
-}
-
-.about__telemetry-text {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-/* ===================================
-   FEATURE PILLARS — BLUERITT GRADIENT CARDS
-   =================================== */
-
-.about__pillars {
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  width: 100%;
-}
-
-.about__pillar-card {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.35rem 1.5rem;
-  border-radius: 20px;
-  background: radial-gradient(ellipse 86% 61% at 6% 14%, #0a2d82 0%, #051f5c 45%, #020e26 100%);
-  border: 1.5px solid rgba(93, 131, 197, 0.35);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
-}
-
-.about__pillar-card:hover {
-  border-color: rgba(0, 194, 255, 0.55);
-  box-shadow: 0 20px 50px rgba(0, 87, 255, 0.3);
-}
-
-.about__pillar-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 87, 255, 0.2);
-  border: 1px solid rgba(0, 194, 255, 0.4);
-  color: #00c2ff;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-.about__pillar-card:hover .about__pillar-icon-box {
-  transform: scale(1.08);
-  background: linear-gradient(135deg, #ff6a00 0%, #0057ff 100%);
-  color: #ffffff;
-  box-shadow: 0 0 20px rgba(255, 106, 0, 0.4);
-}
-
-.about__pillar-info {
-  flex: 1;
-}
-
-.about__pillar-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.35rem;
-}
-
-.about__pillar-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-
-.about__pillar-num {
-  font-size: 0.78rem;
-  font-family: monospace;
-  color: #ff6a00;
+.core-badge-text {
+  font-size: 10.5px;
   font-weight: 700;
+  letter-spacing: 1.1px;
+  color: #e0f0ff;
+  text-transform: uppercase;
 }
 
-.about__pillar-desc {
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: #9aa6bf;
-  margin: 0;
+.core-ver {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #ff7a26;
+  background: rgba(255, 122, 38, 0.12);
+  padding: 1px 5px;
+  border-radius: 4px;
 }
 
-/* ===================================
-   RESPONSIVE
-   =================================== */
+.core-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.7px;
+  color: #7b94b8;
+}
+
+.core-status-beacon {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: #00e676;
+}
+
+.core-status-title {
+  color: #00e676;
+  font-weight: 600;
+}
+
+.core-status-rate {
+  color: #9cb5d6;
+  font-family: monospace;
+}
+
+/* ── Connecting Laser Circuit Bus ── */
+.about-circuit-svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+  margin: -6px auto -4px;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.laser-trace {
+  transition: stroke-width 0.25s ease, filter 0.25s ease;
+}
+
+.laser-trace--cyan {
+  filter: drop-shadow(0 0 6px rgba(0, 194, 255, 0.75));
+}
+
+.laser-trace--orange {
+  filter: drop-shadow(0 0 6px rgba(255, 122, 38, 0.85));
+}
+
+.laser-trace--blue {
+  filter: drop-shadow(0 0 6px rgba(0, 119, 255, 0.75));
+}
+
+.laser-trace--cyan.is-boosted {
+  filter: drop-shadow(0 0 14px #00c2ff) drop-shadow(0 0 4px #ffffff);
+  stroke-width: 3.5px !important;
+}
+
+.laser-trace--orange.is-boosted {
+  filter: drop-shadow(0 0 14px #ff7a26) drop-shadow(0 0 4px #ffffff);
+  stroke-width: 3.5px !important;
+}
+
+.laser-trace--blue.is-boosted {
+  filter: drop-shadow(0 0 14px #0077ff) drop-shadow(0 0 4px #ffffff);
+  stroke-width: 3.5px !important;
+}
+
+/* ── 3. Bespoke Handcrafted Cards (Docked Grid) ── */
+.about-nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 4;
+}
+
+.node-card {
+  position: relative;
+  border-radius: 20px;
+  padding: 24px 22px;
+  background: radial-gradient(115% 85% at 15% 10%, rgba(11, 35, 87, 0.78) 0%, rgba(4, 15, 40, 0.88) 55%, rgba(1, 8, 22, 0.96) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.node-card-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Top Meta Row */
+.node-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.node-code-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #7998be;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.node-icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(0, 32, 94, 0.6);
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00c2ff;
+  transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Giant Bold Metric Number */
+.node-metric-block {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.node-metric-val {
+  font-size: clamp(34px, 3.1vw, 44px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1.2px;
+  color: #ffffff;
+  margin-bottom: 4px;
+  font-feature-settings: 'tnum';
+}
+
+.node-metric-label {
+  font-size: 12px;
+  color: #a0b6d2;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+/* Clean Typography */
+.node-title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.node-desc {
+  color: #8fa6c5;
+  font-size: 12.5px;
+  line-height: 1.48;
+  margin: 0 0 16px;
+  letter-spacing: -0.15px;
+}
+
+/* Telemetry Micro-Badge */
+.node-telemetry-strip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.38);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #8da8cb;
+  font-family: monospace;
+}
+
+.telemetry-pulse-icon {
+  color: #00e5ff;
+  animation: pulseBeat 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseBeat {
+  0%   { transform: scale(0.9); opacity: 0.6; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* ── Color Variations & Hover Depth ── */
+.node-card--cyan.is-hovered,
+.node-card--cyan:hover {
+  border-color: rgba(0, 194, 255, 0.85);
+  box-shadow: 0 22px 55px -10px rgba(0, 194, 255, 0.35), 0 0 30px rgba(0, 87, 255, 0.25);
+}
+.node-card--cyan .node-metric-val {
+  background: linear-gradient(135deg, #ffffff 40%, #00e5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.node-card--orange.is-hovered,
+.node-card--orange:hover {
+  border-color: rgba(255, 122, 38, 0.85);
+  box-shadow: 0 22px 55px -10px rgba(255, 98, 0, 0.35), 0 0 30px rgba(255, 98, 0, 0.22);
+}
+.node-card--orange .node-icon-box {
+  border-color: rgba(255, 122, 38, 0.4);
+  color: #ff7a26;
+  background: rgba(97, 34, 0, 0.4);
+}
+.node-card--orange .node-metric-val {
+  background: linear-gradient(135deg, #ffffff 40%, #ff8c42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.node-card--orange .telemetry-pulse-icon {
+  color: #ff7a26;
+}
+
+.node-card--blue.is-hovered,
+.node-card--blue:hover {
+  border-color: rgba(64, 150, 255, 0.85);
+  box-shadow: 0 22px 55px -10px rgba(21, 93, 252, 0.4), 0 0 30px rgba(0, 87, 255, 0.25);
+}
+.node-card--blue .node-metric-val {
+  background: linear-gradient(135deg, #ffffff 40%, #7db5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================================================
+   RESPONSIVE (Clean Mobile Hierarchy)
+   =================================================== */
 
 @media (max-width: 991px) {
-  .stats-row {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .about-scroll-track {
+    height: auto;
+    min-height: auto;
+    padding: 70px 0 80px;
   }
 
-  .about__grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+  .about-sticky-stage {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    padding: 0;
   }
 
-  .about__visual-wrap {
-    height: 400px;
+  .about-stage-container {
+    padding: 0 20px;
+  }
+
+  .about-map-viewport {
+    margin-top: 20px;
+  }
+
+  .about-circuit-svg {
+    display: none;
+  }
+
+  .about-nodes-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .node-card {
+    padding: 20px 18px;
+  }
+
+  .core-orbit-1 {
+    width: 125px;
+    height: 125px;
+  }
+
+  .core-orbit-2 {
+    width: 145px;
+    height: 145px;
   }
 }
 
-@media (max-width: 575px) {
-  .about-section {
-    padding: 80px 0 60px;
-  }
-
+@media (max-width: 768px) {
   .about-title {
-    font-size: 28px;
+    font-size: 24px;
   }
 
-  .stats-card {
-    padding: 32px 20px;
-  }
-
-  .about__core-card {
-    width: 280px;
+  .node-metric-val {
+    font-size: 32px;
   }
 }

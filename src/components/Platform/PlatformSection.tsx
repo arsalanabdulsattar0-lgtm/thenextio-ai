@@ -131,7 +131,7 @@ export default function PlatformSection() {
   const current = PLATFORM_TABS[activeTab]
 
   return (
-    <section id="services" className="platform-section">
+    <section id="products" className="platform-section">
       {/* Background ambient glows (Hero exact) */}
       <div className="platform-glow platform-glow-left" aria-hidden="true" />
       <div className="platform-glow platform-glow-right" aria-hidden="true" />
@@ -145,7 +145,7 @@ export default function PlatformSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease }}
         >
-          <span><strong>CORE CAPABILITIES &amp; PLATFORM</strong></span>
+          <span><strong>OUR PRODUCTS</strong></span>
         </motion.div>
 
         <motion.h2
@@ -155,7 +155,7 @@ export default function PlatformSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease, delay: 0.1 }}
         >
-          Enterprise AI &amp; <span className="gradient-text">Information Technology Platform</span>
+          Enterprise AI &amp; <span className="gradient-text">Cloud Product Platform</span>
         </motion.h2>
       </div>
 

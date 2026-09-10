@@ -4,10 +4,10 @@
 
 .process-section {
   position: relative;
-  background: radial-gradient(120% 90% at 50% 30%, rgba(21, 47, 99, 0.55) 0%, rgba(0, 9, 23, 0) 65%), #000917;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(21, 47, 99, 0.52) 0%, rgba(0, 9, 23, 0) 65%), #000917;
   padding: 100px 0 110px;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 /* ── Hero-Style Ambient Glows ── */

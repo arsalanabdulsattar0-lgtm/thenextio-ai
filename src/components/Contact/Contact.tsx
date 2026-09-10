@@ -1,376 +1,264 @@
-import { useState, useRef, MouseEvent, FormEvent } from 'react'
+import { useState, FormEvent } from 'react'
 import { motion } from 'framer-motion'
+import Button from '../common/Button'
 import './Contact.css'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-const SCOPE_OPTIONS = [
-  'Autonomous AI & LLMs',
-  'Multi-Cloud Kubernetes',
-  'Real-Time ETL & Vector DB',
-  'Zero-Trust Cyber Defense',
-  'Custom Enterprise Architecture',
+const WHAT_YOU_GET = [
+  'Custom Enterprise AI & Model Integration',
+  'Autonomous Multi-Agent Orchestration',
+  'Mission-Critical Cloud & ERP Infrastructure',
+  'High-Throughput Vector DB & RAG Pipelines',
+  'Dedicated Lead Architect & 99.98% SLA',
 ]
 
-const TIMELINE_OPTIONS = [
-  'Immediate (< 2 Weeks)',
+const SCOPE_CATEGORIES = [
+  'Autonomous AI & LLMs',
+  'Enterprise Cloud & ERP',
+  'Vector DB & RAG',
+  'Web & Mobile Apps',
+]
+
+const TIMELINES = [
+  '< 2 Weeks',
   '1 - 3 Months',
   'Quarterly Roadmap',
 ]
 
 export default function Contact() {
   const [selectedScope, setSelectedScope] = useState('Autonomous AI & LLMs')
-  const [selectedTimeline, setSelectedTimeline] = useState('Immediate (< 2 Weeks)')
+  const [selectedTimeline, setSelectedTimeline] = useState('1 - 3 Months')
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    company: '',
+    contactNo: '',
     message: '',
   })
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
 
-  // 3D Touch Mouse Tilt State
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, shineX: 50, shineY: 50, active: false })
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-
-    const rx = ((y - centerY) / centerY) * -8
-    const ry = ((x - centerX) / centerX) * 8
-    const shineX = (x / rect.width) * 100
-    const shineY = (y / rect.height) * 100
-
-    setTilt({ rx, ry, shineX, shineY, active: true })
-  }
-
-  const handleMouseLeave = () => {
-    setTilt({ rx: 0, ry: 0, shineX: 50, shineY: 50, active: false })
-  }
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (!formData.name || !formData.email) return
-
     setStatus('submitting')
     setTimeout(() => {
       setStatus('success')
-    }, 900)
+    }, 1200)
+  }
+
+  const handleScrollToServices = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <section id="contact" className="contact-section">
-      {/* Background ambient glows (Hero exact) */}
-      <div className="contact-glow contact-glow-left" aria-hidden="true" />
-      <div className="contact-glow contact-glow-right" aria-hidden="true" />
-
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-
-        {/* ── Section Header (Blueritt 1:1 Standard) ── */}
-        <div className="contact-header">
-          <motion.div
-            className="section-tag"
-            initial={{ opacity: 0, y: -14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease }}
-          >
-            <span><strong>LET&rsquo;S BUILD TOGETHER</strong></span>
-          </motion.div>
-
-          <div className="contact-header-grid">
-            <motion.h2
-              className="contact-main-title"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease, delay: 0.1 }}
-            >
-              Turn Your Architecture Vision{' '}
-              <span className="gradient-text">Into Production Reality</span>
-            </motion.h2>
-
-            <motion.p
-              className="contact-main-sub"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease, delay: 0.18 }}
-            >
-              Ready to deploy resilient neural AI, scale mission-critical cloud infrastructure,
-              or eliminate data bottlenecks? Connect directly with our enterprise engineering team.
-            </motion.p>
+    <section id="contact" className="contact-form-section">
+      <div className="container">
+        {/* SECTION TITLE */}
+        <div className="row justify-content-center">
+          <div className="col-xl-10">
+            <div className="contact-section-title">
+              <motion.div
+                className="section-tag"
+                initial={{ opacity: 0, y: -12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease }}
+              >
+                <span><strong>CONTACT US</strong></span>
+              </motion.div>
+              <h2>Start finding your next <span className="title-highlight">AI solution today</span></h2>
+            </div>
           </div>
         </div>
 
-        {/* ── 2-Column VIP 3D Contact Layout ── */}
-        <div className="contact-grid-body">
-
-          {/* Left Column: Direct Channels, SLAs & Intake Status */}
-          <div className="contact-left-col">
-
-            {/* Direct Intake Card */}
+        {/* CONTENT (2-Card Grid) */}
+        <div className="row g-4 justify-content-center contact-cards-row">
+          
+          {/* LEFT CARD */}
+          <div className="col-xl-3 col-lg-4">
             <div className="contact-info-card">
-              <span className="contact-card-label">DIRECT ENGINEERING DESK</span>
-              <h3 className="contact-card-heading">Speak with a Principal Architect</h3>
-              <p className="contact-card-desc">
-                Skip the generic sales queue. Connect directly with systems engineers who architect and deploy production workloads.
-              </p>
-
-              <div className="contact-channels-list">
-                <a href="mailto:partnerships@thenextio.ai" className="contact-channel-item">
-                  <div className="channel-icon-wrap">✉️</div>
-                  <div>
-                    <span className="channel-title">Direct Inquiries</span>
-                    <span className="channel-val">partnerships@thenextio.ai</span>
-                  </div>
-                </a>
-
-                <div className="contact-channel-item">
-                  <div className="channel-icon-wrap">⚡</div>
-                  <div>
-                    <span className="channel-title">Guaranteed Response Window</span>
-                    <span className="channel-val">&lt; 2 Hours for Enterprise Inquiries</span>
-                  </div>
-                </div>
-
-                <div className="contact-channel-item">
-                  <div className="channel-icon-wrap">🛡️</div>
-                  <div>
-                    <span className="channel-title">Security &amp; Confidentiality</span>
-                    <span className="channel-val">Mutual NDA Guaranteed • SOC2 Type II</span>
-                  </div>
-                </div>
+              <div>
+                <h3>What You’ll Get</h3>
+                <ul>
+                  {WHAT_YOU_GET.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="contact-card-btn-wrap">
+                <Button
+                  href="#services"
+                  variant="ghost"
+                  fillColor="orange"
+                  size="md"
+                  onClick={handleScrollToServices}
+                  className="theme-btn-standard"
+                >
+                  Learn more
+                </Button>
               </div>
             </div>
-
-            {/* Live Intake Status & Capacity Card */}
-            <div className="contact-capacity-box">
-              <div className="capacity-header">
-                <span className="capacity-ping-dot" />
-                <span className="capacity-status-text">Q3 DEPLOYMENT CAPACITY</span>
-              </div>
-              <div className="capacity-metrics">
-                <div className="capacity-metric">
-                  <span className="cmetric-num">3 Slots</span>
-                  <span className="cmetric-lbl">Remaining for Q3 Enterprise Cohort</span>
-                </div>
-                <div className="capacity-metric-sep" />
-                <div className="capacity-metric">
-                  <span className="cmetric-num">99.8%</span>
-                  <span className="cmetric-lbl">On-Time Architecture Delivery SLA</span>
-                </div>
-              </div>
-            </div>
-
           </div>
 
-          {/* Right Column: 3D Holographic Project Intake Console (Mouse Tilt) */}
-          <div className="contact-right-col">
-            <div className="contact-3d-stage">
-              <motion.div
-                ref={cardRef}
-                className="contact-3d-card"
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-                  transition: tilt.active ? 'transform 0.08s ease-out' : 'transform 0.5s ease-out',
-                }}
-              >
-                {/* Holographic Mouse Glare Layer */}
-                <div
-                  className="contact-3d-glare"
-                  style={{
-                    background: `radial-gradient(circle 500px at ${tilt.shineX}% ${tilt.shineY}%, rgba(255, 255, 255, 0.09) 0%, transparent 80%)`,
-                    opacity: tilt.active ? 1 : 0,
-                  }}
-                  aria-hidden="true"
-                />
+          {/* RIGHT FORM */}
+          <div className="col-xl-7 col-lg-8">
+            <div className="contact-form-wrapper">
+              <div className="contact-form-heading">
+                <h3>Tell us more about your project</h3>
+                <p>Share your project details with us, and we'll respond promptly.</p>
+              </div>
 
-                {/* Top Terminal Bar */}
-                <div className="contact-card-topbar">
-                  <div className="contact-mac-dots">
-                    <span className="cdot cdot-red" />
-                    <span className="cdot cdot-yellow" />
-                    <span className="cdot cdot-green" />
-                  </div>
-                  <div className="contact-terminal-url">
-                    <span className="curl-lock">🔒</span>
-                    <span>https://intake.thenextio.ai/new-project</span>
-                  </div>
-                  <div className="contact-terminal-secure">
-                    <span className="csecure-dot" />
-                    <span>AES-256 ENCRYPTED</span>
-                  </div>
+              {status === 'success' ? (
+                <div className="contact-success-state">
+                  <div className="success-icon">✓</div>
+                  <h4>Inquiry Submitted Successfully</h4>
+                  <p>Our Principal Solutions Architect is reviewing your requirements and will reach out shortly.</p>
+                  <Button
+                    variant="ghost"
+                    fillColor="orange"
+                    size="md"
+                    onClick={() => {
+                      setStatus('idle')
+                      setFormData({ firstName: '', lastName: '', email: '', contactNo: '', message: '' })
+                    }}
+                    className="theme-btn-standard"
+                  >
+                    Submit Another Inquiry
+                  </Button>
                 </div>
-
-                {/* Card Form Body */}
-                <div className="contact-card-content">
-                  {status === 'success' ? (
-                    <motion.div
-                      className="contact-success-screen"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, ease }}
-                    >
-                      <div className="success-icon-wrap">✓</div>
-                      <h3 className="success-title">Project Intake Dispatched</h3>
-                      <p className="success-desc">
-                        Your architectural specification has been securely routed to our senior engineering desk.
-                        A Principal Architect will review your parameters and follow up within &lt; 2 hours.
-                      </p>
-                      <div className="success-badge">
-                        <span>CONFIRMATION ID: #{Math.floor(100000 + Math.random() * 900000)}</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="success-reset-btn"
-                        onClick={() => {
-                          setStatus('idle')
-                          setFormData({ name: '', email: '', company: '', message: '' })
-                        }}
-                      >
-                        Submit Another Inquiry
-                      </button>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="contact-form-inner">
-
-                      {/* Scope Selector Chips */}
-                      <div className="cform-group">
-                        <label className="cform-label">PROJECT ARCHITECTURE SCOPE</label>
-                        <div className="cscope-chips">
-                          {SCOPE_OPTIONS.map((opt) => (
-                            <button
-                              key={opt}
-                              type="button"
-                              className={`cscope-chip ${selectedScope === opt ? 'is-active' : ''}`}
-                              onClick={() => setSelectedScope(opt)}
-                            >
-                              {opt}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Name & Work Email Inputs */}
-                      <div className="cform-row">
-                        <div className="cform-field">
-                          <label className="cform-label" htmlFor="client-name">
-                            FULL NAME <span className="req">*</span>
-                          </label>
-                          <input
-                            id="client-name"
-                            type="text"
-                            required
-                            placeholder="e.g. Elena Rostova"
-                            className="cform-input"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          />
-                        </div>
-
-                        <div className="cform-field">
-                          <label className="cform-label" htmlFor="client-email">
-                            WORK EMAIL <span className="req">*</span>
-                          </label>
-                          <input
-                            id="client-email"
-                            type="email"
-                            required
-                            placeholder="elena@enterprise.com"
-                            className="cform-input"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Organization / Company */}
-                      <div className="cform-field">
-                        <label className="cform-label" htmlFor="client-company">
-                          ORGANIZATION / COMPANY
-                        </label>
+              ) : (
+                <form onSubmit={handleSubmit} className="contact-full-form">
+                  <div className="row g-3">
+                    {/* FIRST NAME */}
+                    <div className="col-md-6">
+                      <div className="form-group">
                         <input
-                          id="client-company"
                           type="text"
-                          placeholder="e.g. Global Financial Corp"
-                          className="cform-input"
-                          value={formData.company}
-                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                          name="first_name"
+                          placeholder="First Name*"
+                          required
+                          value={formData.firstName}
+                          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                         />
                       </div>
+                    </div>
 
-                      {/* Timeline Options */}
-                      <div className="cform-group">
-                        <label className="cform-label">TARGET DEPLOYMENT TIMELINE</label>
-                        <div className="ctimeline-chips">
-                          {TIMELINE_OPTIONS.map((t) => (
+                    {/* LAST NAME */}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="last_name"
+                          placeholder="Last Name*"
+                          required
+                          value={formData.lastName}
+                          onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* EMAIL */}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email Address*"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* PHONE */}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="Contact No."
+                          value={formData.contactNo}
+                          onChange={(e) => setFormData({ ...formData, contactNo: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    {/* CATEGORY SELECTION */}
+                    <div className="col-12">
+                      <div className="chips-selector-group">
+                        <span className="chips-title">PROJECT CATEGORY</span>
+                        <div className="chips-row">
+                          {SCOPE_CATEGORIES.map((cat) => (
                             <button
-                              key={t}
+                              key={cat}
                               type="button"
-                              className={`ctimeline-chip ${selectedTimeline === t ? 'is-active' : ''}`}
-                              onClick={() => setSelectedTimeline(t)}
+                              className={`pill-chip-btn ${selectedScope === cat ? 'active' : ''}`}
+                              onClick={() => setSelectedScope(cat)}
                             >
-                              {t}
+                              {cat}
                             </button>
                           ))}
                         </div>
                       </div>
+                    </div>
 
-                      {/* Project Overview */}
-                      <div className="cform-field">
-                        <label className="cform-label" htmlFor="client-message">
-                          TECHNICAL SCOPE &amp; OBJECTIVES
-                        </label>
+                    {/* TIMELINE SELECTION */}
+                    <div className="col-12">
+                      <div className="chips-selector-group">
+                        <span className="chips-title">TARGET TIMELINE</span>
+                        <div className="chips-row">
+                          {TIMELINES.map((time) => (
+                            <button
+                              key={time}
+                              type="button"
+                              className={`pill-chip-btn ${selectedTimeline === time ? 'active' : ''}`}
+                              onClick={() => setSelectedTimeline(time)}
+                            >
+                              {time}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* MESSAGE */}
+                    <div className="col-12">
+                      <div className="form-group">
                         <textarea
-                          id="client-message"
-                          rows={4}
-                          placeholder="Briefly describe your existing infrastructure, model requirements, target SLAs, or operational hurdles..."
-                          className="cform-textarea"
+                          name="message"
+                          placeholder="What is your project about? (e.g. models, existing infrastructure, technical goals...)"
+                          required
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         />
                       </div>
+                    </div>
 
-                      {/* Submit Action */}
-                      <div className="cform-submit-row">
-                        <button
+                    {/* SUBMIT BUTTON ROW */}
+                    <div className="col-12">
+                      <div className="contact-submit-row">
+                        <Button
                           type="submit"
-                          disabled={status === 'submitting'}
-                          className="cform-submit-btn"
+                          variant="ghost"
+                          fillColor="orange"
+                          size="md"
+                          className="theme-btn-standard submit-btn-custom"
                         >
-                          <span className="submit-btn-bg" aria-hidden="true" />
-                          <span className="submit-btn-content">
-                            <span>
-                              {status === 'submitting'
-                                ? 'Encrypting & Routing...'
-                                : 'Submit Project Architecture ↗'}
-                            </span>
-                          </span>
-                        </button>
-
-                        <span className="cform-security-note">
-                          🔒 Encrypted under SOC2 Type II &bull; Mutual NDA Applied
-                        </span>
+                          {status === 'submitting' ? 'Submitting...' : 'Submit'}
+                        </Button>
+                        <span className="security-tag">🔒 SOC2 Certified &bull; 100% Confidential</span>
                       </div>
-
-                    </form>
-                  )}
-                </div>
-
-              </motion.div>
+                    </div>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
 
         </div>
-
       </div>
     </section>
   )

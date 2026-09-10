@@ -14,11 +14,6 @@ const NAV_LINKS = [
   { label: 'CONTACT', href: '#contact' },
 ]
 
-const EDGE_REGIONS = [
-  { region: 'US-EAST', latency: '12ms', status: 'optimal' },
-  { region: 'EU-CENTRAL', latency: '28ms', status: 'optimal' },
-  { region: 'AP-EAST', latency: '44ms', status: 'optimal' },
-]
 
 export default function Footer() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -214,19 +209,7 @@ export default function Footer() {
                 </Button>
               </div>
 
-              {/* Live Edge Latency Nodes */}
-              <div className="footer__edge-telemetry">
-                <span className="edge-telemetry-title">GLOBAL EDGE TELEMETRY</span>
-                <div className="edge-nodes-list">
-                  {EDGE_REGIONS.map((node) => (
-                    <div key={node.region} className="edge-node-item">
-                      <span className="node-dot" />
-                      <span className="node-name">{node.region}</span>
-                      <span className="node-latency">{node.latency}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+
 
             </div>
 

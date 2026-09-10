@@ -1,20 +1,18 @@
-import { useRef, type MouseEvent, type ReactNode } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useState, useEffect, useRef, type MouseEvent, type ReactNode } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, useScroll, type MotionValue } from 'framer-motion'
 import './About.css'
 
-const ease = [0.22, 1, 0.36, 1] as const
-
-/* ── SVG Icons ── */
+/* ── SVG Technical Icons (Precision Handcrafted) ── */
 function IconCpu({ className = '' }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="22"
-      height="22"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -36,12 +34,12 @@ function IconZap({ className = '' }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="22"
-      height="22"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -54,12 +52,12 @@ function IconShieldCheck({ className = '' }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="22"
-      height="22"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -73,8 +71,8 @@ function IconActivity({ className = '' }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="16"
-      height="16"
+      width="13"
+      height="13"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -87,53 +85,125 @@ function IconActivity({ className = '' }: { className?: string }) {
   )
 }
 
-/* ── AI & IT Pillars ── */
-interface PillarItem {
+/* ── Reveal Word Component for Smooth Scroll Typography ── */
+interface RevealWordProps {
+  word: string
+  progress: MotionValue<number>
+  range: [number, number]
+  isAccent?: boolean
+}
+
+function RevealWord({ word, progress, range, isAccent = false }: RevealWordProps) {
+  const opacity = useTransform(progress, range, [0.12, 1])
+  const y = useTransform(progress, range, [6, 0])
+
+  return (
+    <motion.span
+      className={`about-reveal-word ${isAccent ? 'word-accent' : ''}`}
+      style={{ opacity, y }}
+    >
+      {word}{' '}
+    </motion.span>
+  )
+}
+
+/* ── Node Data Definition ── */
+interface ArchitectureNode {
   id: string
+  code: string
   title: string
   desc: string
+  metricVal: string
+  metricLabel: string
+  telemetry: string
+  accent: 'cyan' | 'orange' | 'blue'
   icon: ReactNode
 }
 
-const PILLARS: PillarItem[] = [
+const NODES: ArchitectureNode[] = [
   {
-    id: '01',
+    id: 'node-1',
+    code: 'SYSTEM // 01',
     title: 'Autonomous IT Architecture',
     desc: 'Self-healing cloud infrastructure and neural compute engines engineered to dynamically scale with global enterprise workloads.',
+    metricVal: '99.99%',
+    metricLabel: 'Cloud Uptime & Mission-Critical SLA',
+    telemetry: 'Self-Healing Engine • 0 Drift',
+    accent: 'cyan',
     icon: <IconCpu />,
   },
   {
-    id: '02',
+    id: 'node-2',
+    code: 'SYSTEM // 02',
     title: 'Real-Time Cognitive Intelligence',
     desc: 'Sub-millisecond inference pipelines delivering deterministic reasoning, real-time telemetry perception, and automated IT operations.',
+    metricVal: '10x',
+    metricLabel: 'Faster Enterprise Software Velocity',
+    telemetry: 'Inference < 1.2ms • 240 RPS',
+    accent: 'orange',
     icon: <IconZap />,
   },
   {
-    id: '03',
-    title: 'Enterprise Cyber Governance & Security',
+    id: 'node-3',
+    code: 'SYSTEM // 03',
+    title: 'Enterprise Cyber Governance',
     desc: 'Cryptographically verifiable AI models, private air-gapped deployments, and zero-trust cloud data protection standards.',
+    metricVal: '240+',
+    metricLabel: 'Enterprise AI & IT Systems Deployed',
+    telemetry: 'Zero-Trust • Air-Gapped Validated',
+    accent: 'blue',
     icon: <IconShieldCheck />,
   },
 ]
 
-/* ── Interactive 3D Sculpture Component ── */
-function InteractiveSculpture() {
-  const containerRef = useRef<HTMLDivElement>(null)
+const HEADLINE_WORDS = [
+  { word: 'Pioneering', accent: false },
+  { word: 'enterprise', accent: false },
+  { word: 'AI', accent: true },
+  { word: '&', accent: false },
+  { word: 'next-generation', accent: false },
+  { word: 'Information', accent: false },
+  { word: 'Technology.', accent: true },
+]
 
+export default function About() {
+  const trackRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const [isDesktop, setIsDesktop] = useState(true)
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth > 991)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // ── Scroll Progress across 240vh ──
+  // Starts exactly when About section reaches 65% of viewport (visible to user)
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ['start 65%', 'end end'],
+  })
+
+  // Silky responsive spring with zero lag
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 85,
+    damping: 26,
+    restDelta: 0.001,
+  })
+
+  // 3D Parallax Mouse Response (Handcrafted subtle tilt)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-
-  const springConfig = { stiffness: 65, damping: 18 }
-  const smoothX = useSpring(mouseX, springConfig)
-  const smoothY = useSpring(mouseY, springConfig)
-
-  const rotateX = useTransform(smoothY, [-250, 250], [16, -16])
-  const rotateY = useTransform(smoothX, [-250, 250], [-16, 16])
+  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 18 })
+  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 18 })
+  const rotateX = useTransform(smoothMouseY, [-300, 300], [5, -5])
+  const rotateY = useTransform(smoothMouseX, [-300, 300], [-5, 5])
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-    const el = containerRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
+    if (!isDesktop) return
+    const rect = e.currentTarget.getBoundingClientRect()
     mouseX.set(e.clientX - (rect.left + rect.width / 2))
     mouseY.set(e.clientY - (rect.top + rect.height / 2))
   }
@@ -141,220 +211,327 @@ function InteractiveSculpture() {
   function handleMouseLeave() {
     mouseX.set(0)
     mouseY.set(0)
+    setHoveredNode(null)
   }
 
+  // ── 1. Text Phase: Starts completely unrevealed, lights up word-by-word with scroll (0.01 -> 0.25) ──
+  const tagOpacity = useTransform(smoothProgress, [0.00, 0.05], [0.15, 1])
+  const descOpacity = useTransform(smoothProgress, [0.20, 0.29], [0.15, 1])
+  const descY = useTransform(smoothProgress, [0.20, 0.29], [10, 0])
+
+  // Header lifts slightly when cards converge to make room
+  const headerMoveY = useTransform(smoothProgress, [0.28, 0.52], [0, -18])
+  const headerScale = useTransform(smoothProgress, [0.28, 0.52], [1, 0.96])
+
+  // ── 2. Central Core Ignition (0.26 -> 0.46) ──
+  const coreScale = useTransform(smoothProgress, [0.26, 0.46], [0.82, 1])
+  const coreOpacity = useTransform(smoothProgress, [0.26, 0.40], [0, 1])
+  const coreY = useTransform(smoothProgress, [0.26, 0.46], [-30, 0])
+
+  // ── 3. The 3-Way Card Convergence (Left, Bottom, Right) (0.28 -> 0.54) ──
+  // Card 1: Flies in smoothly from the LEFT
+  const card1X = useTransform(smoothProgress, [0.28, 0.54], [-240, 0])
+  const card1Y = useTransform(smoothProgress, [0.28, 0.54], [25, 0])
+  const card1RotateY = useTransform(smoothProgress, [0.28, 0.54], [18, 0])
+  const card1RotateZ = useTransform(smoothProgress, [0.28, 0.54], [-4, 0])
+  const card1Scale = useTransform(smoothProgress, [0.28, 0.54], [0.86, 1])
+  const card1Opacity = useTransform(smoothProgress, [0.28, 0.44], [0, 1])
+
+  // Card 2: Rises smoothly from the BOTTOM
+  const card2Y = useTransform(smoothProgress, [0.32, 0.58], [220, 0])
+  const card2Scale = useTransform(smoothProgress, [0.32, 0.58], [0.84, 1])
+  const card2Opacity = useTransform(smoothProgress, [0.32, 0.46], [0, 1])
+
+  // Card 3: Flies in smoothly from the RIGHT
+  const card3X = useTransform(smoothProgress, [0.28, 0.54], [240, 0])
+  const card3Y = useTransform(smoothProgress, [0.28, 0.54], [25, 0])
+  const card3RotateY = useTransform(smoothProgress, [0.28, 0.54], [-18, 0])
+  const card3RotateZ = useTransform(smoothProgress, [0.28, 0.54], [4, 0])
+  const card3Scale = useTransform(smoothProgress, [0.28, 0.54], [0.86, 1])
+  const card3Opacity = useTransform(smoothProgress, [0.28, 0.44], [0, 1])
+
+  // ── 4. Laser Circuit Trace Draw (Locks as cards dock: 0.48 -> 0.70) ──
+  const line1Length = useTransform(smoothProgress, [0.48, 0.68], [0, 1])
+  const line2Length = useTransform(smoothProgress, [0.50, 0.70], [0, 1])
+  const line3Length = useTransform(smoothProgress, [0.48, 0.68], [0, 1])
+
   return (
-    <div
-      ref={containerRef}
-      className="about__visual-wrap"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <motion.div
-        className="about__sculpture"
-        style={{ rotateX, rotateY }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 1.0, ease }}
-      >
-        {/* Ambient Gyro Orbit Rings in Blueritt Orange & Blue */}
-        <div className="about__ring about__ring--1" />
-        <div className="about__ring about__ring--2" />
+    <section id="about" ref={trackRef} className="about-scroll-track">
+      {/* Sticky Cinematic Viewport Stage */}
+      <div className="about-sticky-stage">
+        {/* Blueritt Atmospheric Backdrop Lighting */}
+        <div className="about-glow about-glow-left" aria-hidden="true" />
+        <div className="about-glow about-glow-right" aria-hidden="true" />
+        <div className="about-glow about-glow-center" aria-hidden="true" />
 
-        {/* 3D Core Card in Blueritt Radial Gradient */}
-        <motion.div
-          className="about__core-card"
-          whileHover={{ z: 20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="about__core-header">
-            <span className="about__core-badge">
-              <span className="about__core-dot" />
-              IT Neural Core
-            </span>
-            <span className="about__core-ver">SYS // v4.8</span>
-          </div>
-
-          <div className="about__core-graph">
-            <div className="about__graph-bar">
-              <span>Cloud Pipeline Throughput</span>
-              <div className="about__graph-track">
-                <motion.div
-                  className="about__graph-fill"
-                  initial={{ width: '0%' }}
-                  whileInView={{ width: '96%' }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.4, ease, delay: 0.3 }}
-                />
-              </div>
-              <span className="about__graph-val">96%</span>
-            </div>
-
-            <div className="about__graph-bar">
-              <span>Model Reasoning Accuracy</span>
-              <div className="about__graph-track">
-                <motion.div
-                  className="about__graph-fill"
-                  initial={{ width: '0%' }}
-                  whileInView={{ width: '99.8%' }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.4, ease, delay: 0.45 }}
-                />
-              </div>
-              <span className="about__graph-val">99.8%</span>
-            </div>
-
-            <div className="about__graph-bar">
-              <span>IT Cluster Efficiency</span>
-              <div className="about__graph-track">
-                <motion.div
-                  className="about__graph-fill"
-                  initial={{ width: '0%' }}
-                  whileInView={{ width: '89%' }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.4, ease, delay: 0.6 }}
-                />
-              </div>
-              <span className="about__graph-val">89%</span>
-            </div>
-          </div>
-
-          {/* 3D Elevated Telemetry Floating Pill */}
+        <div className="container about-stage-container">
+          {/* ── 1. CINEMATIC SCROLL-REVEAL TEXT HEADER ── */}
           <motion.div
-            className="about__telemetry-pill"
-            animate={{ y: [-5, 5, -5] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            ref={headerRef}
+            className="about-header-wrap"
+            style={isDesktop ? { y: headerMoveY, scale: headerScale } : {}}
           >
-            <span className="about__telemetry-icon">
-              <IconActivity />
-            </span>
-            <span className="about__telemetry-text">Latency &lt; 1.2ms // Zero Drift</span>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </div>
-  )
-}
+            <motion.div className="section-tag" style={isDesktop ? { opacity: tagOpacity } : {}}>
+              <span>
+                <strong>ABOUT US</strong>
+              </span>
+            </motion.div>
 
-/* ── Main About Section (WHO WE ARE — AI & Information Technology) ── */
-export default function About() {
-  return (
-    <section id="about" className="about-section">
-      {/* Background Ambient Glows (Blueritt exact) */}
-      <div className="about-glow about-glow-left" aria-hidden="true" />
-      <div className="about-glow about-glow-right" aria-hidden="true" />
+            {/* Kinetic Typography: Words Reveal Opacity on Scroll */}
+            <h2 className="about-title">
+              {HEADLINE_WORDS.map((item, idx) => {
+                // Stagger each word across smoothProgress 0.01 to 0.24 (reveals live as user scrolls)
+                const start = 0.01 + idx * 0.03
+                const end = start + 0.045
+                return (
+                  <RevealWord
+                    key={idx}
+                    word={item.word}
+                    progress={smoothProgress}
+                    range={[start, end]}
+                    isAccent={item.accent}
+                  />
+                )
+              })}
+            </h2>
 
-      <div className="container about-container">
-        {/* HEADER AREA */}
-        <div className="about-header-wrap">
-          {/* Top Tag (Blueritt exact) */}
-          <motion.div
-            className="section-tag"
-            initial={{ opacity: 0, y: -14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease }}
-          >
-            <span>
-              <strong>WHO WE ARE</strong>
-            </span>
+            <motion.p
+              className="about-description"
+              style={isDesktop ? { opacity: descOpacity, y: descY } : {}}
+            >
+              At thenextio.ai, we engineer the convergence of artificial intelligence and
+              enterprise Information Technology. We design bespoke neural architectures,
+              automated cloud infrastructure, and mission-critical software systems with <span>confidence.</span>
+            </motion.p>
           </motion.div>
 
-          {/* Main Title tailored to AI & IT */}
-          <motion.h2
-            className="about-title"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease, delay: 0.15 }}
+          {/* ── 2. INTERACTIVE 3D CONVERGENCE STAGE ── */}
+          <div
+            className="about-map-viewport"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
-            Pioneering enterprise AI &amp; next-generation Information Technology.
-          </motion.h2>
-
-          {/* Description with Blueritt signature orange underline */}
-          <motion.p
-            className="about-description"
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease, delay: 0.28 }}
-          >
-            At thenextio.ai, we engineer the convergence of artificial intelligence and
-            enterprise Information Technology. We design bespoke neural architectures,
-            automated cloud infrastructure, and mission-critical software systems with <span>confidence.</span>
-          </motion.p>
-        </div>
-
-        {/* BLUERITT STATS ROW (Radial Gradient Cards) */}
-        <div className="stats-row">
-          <motion.div
-            className="stats-card"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            whileHover={{ y: -6 }}
-          >
-            <h3>99.99%</h3>
-            <p>Cloud Uptime &amp; Mission-Critical SLA</p>
-          </motion.div>
-
-          <motion.div
-            className="stats-card"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.32 }}
-            whileHover={{ y: -6 }}
-          >
-            <h3>10x</h3>
-            <p>Faster Enterprise Software Velocity</p>
-          </motion.div>
-
-          <motion.div
-            className="stats-card"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.44 }}
-            whileHover={{ y: -6 }}
-          >
-            <h3>240+</h3>
-            <p>Enterprise AI &amp; IT Systems Deployed</p>
-          </motion.div>
-        </div>
-
-        {/* DETAILED DUAL-COLUMN ARCHITECTURE & PILLARS */}
-        <div className="about__grid">
-          {/* LEFT: 3D Interactive Sculpture */}
-          <InteractiveSculpture />
-
-          {/* RIGHT: Feature Pillars in Blueritt Gradient Cards */}
-          <div className="about__pillars">
-            {PILLARS.map((pillar, idx) => (
+            <motion.div
+              className="about-map-stage"
+              style={isDesktop ? { rotateX, rotateY } : {}}
+            >
+              {/* Central Core (Hub that activates as cards converge) */}
               <motion.div
-                key={pillar.id}
-                className="about__pillar-card"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.65, ease, delay: 0.25 + idx * 0.12 }}
-                whileHover={{ y: -4 }}
+                className="about-neural-core"
+                style={isDesktop ? { scale: coreScale, opacity: coreOpacity, y: coreY } : {}}
               >
-                <div className="about__pillar-icon-box">{pillar.icon}</div>
-                <div className="about__pillar-info">
-                  <div className="about__pillar-top">
-                    <span className="about__pillar-title">{pillar.title}</span>
-                    <span className="about__pillar-num">{pillar.id}</span>
+                <div className="core-orbit core-orbit-1" />
+                <div className="core-orbit core-orbit-2" />
+
+                <div className="core-pod">
+                  <div className="core-pod-header">
+                    <span className="core-badge-dot" />
+                    <span className="core-badge-text">THENEXTIO AI ARCHITECTURE</span>
+                    <span className="core-ver">SYS // v4.8</span>
                   </div>
-                  <p className="about__pillar-desc">{pillar.desc}</p>
+
+                  <div className="core-status-row">
+                    <span className="core-status-beacon" />
+                    <span className="core-status-title">3 CONVERGED CLUSTERS ACTIVE</span>
+                    <span className="core-status-rate">2.4 TB/S BUS</span>
+                  </div>
                 </div>
               </motion.div>
-            ))}
+
+              {/* Connecting Laser Circuit Bus (Desktop) */}
+              {isDesktop && (
+                <svg
+                  className="about-circuit-svg"
+                  viewBox="0 0 1200 110"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id="laserGradCyan" x1="600" y1="0" x2="200" y2="110" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#00E5FF" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#0057FF" stopOpacity="0.9" />
+                    </linearGradient>
+                    <linearGradient id="laserGradOrange" x1="600" y1="0" x2="600" y2="110" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#FFA05C" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#FF5900" stopOpacity="0.95" />
+                    </linearGradient>
+                    <linearGradient id="laserGradBlue" x1="600" y1="0" x2="1000" y2="110" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#00E5FF" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#155DFC" stopOpacity="0.9" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Laser 1: to Left Card */}
+                  <path
+                    d="M 600,0 C 600,50 200,50 200,110"
+                    stroke="rgba(255, 255, 255, 0.08)"
+                    strokeWidth="1.8"
+                    strokeDasharray="4 6"
+                  />
+                  <motion.path
+                    d="M 600,0 C 600,50 200,50 200,110"
+                    stroke="url(#laserGradCyan)"
+                    strokeWidth={hoveredNode === 'node-1' ? '3.5' : '2.4'}
+                    style={{ pathLength: line1Length }}
+                    className={`laser-trace laser-trace--cyan ${hoveredNode === 'node-1' ? 'is-boosted' : ''}`}
+                  />
+
+                  {/* Laser 2: to Center Card (Middle Pipeline) */}
+                  <path
+                    d="M 600,0 L 600,110"
+                    stroke="rgba(255, 255, 255, 0.08)"
+                    strokeWidth="1.8"
+                    strokeDasharray="4 6"
+                  />
+                  <motion.path
+                    d="M 600,0 L 600,110"
+                    stroke="url(#laserGradOrange)"
+                    strokeWidth={hoveredNode === 'node-2' ? '3.5' : '2.4'}
+                    style={{ pathLength: line2Length }}
+                    className={`laser-trace laser-trace--orange ${hoveredNode === 'node-2' ? 'is-boosted' : ''}`}
+                  />
+
+                  {/* Laser 3: to Right Card */}
+                  <path
+                    d="M 600,0 C 600,50 1000,50 1000,110"
+                    stroke="rgba(255, 255, 255, 0.08)"
+                    strokeWidth="1.8"
+                    strokeDasharray="4 6"
+                  />
+                  <motion.path
+                    d="M 600,0 C 600,50 1000,50 1000,110"
+                    stroke="url(#laserGradBlue)"
+                    strokeWidth={hoveredNode === 'node-3' ? '3.5' : '2.4'}
+                    style={{ pathLength: line3Length }}
+                    className={`laser-trace laser-trace--blue ${hoveredNode === 'node-3' ? 'is-boosted' : ''}`}
+                  />
+                </svg>
+              )}
+
+              {/* ── 3. THREE CARDS FLY-IN FROM LEFT, BOTTOM, RIGHT ── */}
+              <div className="about-nodes-grid">
+                {/* CARD 01: FLIES IN FROM LEFT */}
+                <motion.div
+                  className={`node-card node-card--${NODES[0].accent} ${hoveredNode === NODES[0].id ? 'is-hovered' : ''}`}
+                  style={
+                    isDesktop
+                      ? {
+                          x: card1X,
+                          y: card1Y,
+                          rotateY: card1RotateY,
+                          rotateZ: card1RotateZ,
+                          scale: card1Scale,
+                          opacity: card1Opacity,
+                        }
+                      : {}
+                  }
+                  onMouseEnter={() => setHoveredNode(NODES[0].id)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                >
+                  <div className="node-card-glare" />
+
+                  <div className="node-card-top">
+                    <span className="node-code-badge">{NODES[0].code}</span>
+                    <div className="node-icon-box">{NODES[0].icon}</div>
+                  </div>
+
+                  <div className="node-metric-block">
+                    <span className="node-metric-val">{NODES[0].metricVal}</span>
+                    <span className="node-metric-label">{NODES[0].metricLabel}</span>
+                  </div>
+
+                  <h3 className="node-title">{NODES[0].title}</h3>
+                  <p className="node-desc">{NODES[0].desc}</p>
+
+                  <div className="node-telemetry-strip">
+                    <IconActivity className="telemetry-pulse-icon" />
+                    <span>{NODES[0].telemetry}</span>
+                  </div>
+                </motion.div>
+
+                {/* CARD 02: RISES FROM BOTTOM */}
+                <motion.div
+                  className={`node-card node-card--${NODES[1].accent} ${hoveredNode === NODES[1].id ? 'is-hovered' : ''}`}
+                  style={
+                    isDesktop
+                      ? {
+                          y: card2Y,
+                          scale: card2Scale,
+                          opacity: card2Opacity,
+                        }
+                      : {}
+                  }
+                  onMouseEnter={() => setHoveredNode(NODES[1].id)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                >
+                  <div className="node-card-glare" />
+
+                  <div className="node-card-top">
+                    <span className="node-code-badge">{NODES[1].code}</span>
+                    <div className="node-icon-box">{NODES[1].icon}</div>
+                  </div>
+
+                  <div className="node-metric-block">
+                    <span className="node-metric-val">{NODES[1].metricVal}</span>
+                    <span className="node-metric-label">{NODES[1].metricLabel}</span>
+                  </div>
+
+                  <h3 className="node-title">{NODES[1].title}</h3>
+                  <p className="node-desc">{NODES[1].desc}</p>
+
+                  <div className="node-telemetry-strip">
+                    <IconActivity className="telemetry-pulse-icon" />
+                    <span>{NODES[1].telemetry}</span>
+                  </div>
+                </motion.div>
+
+                {/* CARD 03: FLIES IN FROM RIGHT */}
+                <motion.div
+                  className={`node-card node-card--${NODES[2].accent} ${hoveredNode === NODES[2].id ? 'is-hovered' : ''}`}
+                  style={
+                    isDesktop
+                      ? {
+                          x: card3X,
+                          y: card3Y,
+                          rotateY: card3RotateY,
+                          rotateZ: card3RotateZ,
+                          scale: card3Scale,
+                          opacity: card3Opacity,
+                        }
+                      : {}
+                  }
+                  onMouseEnter={() => setHoveredNode(NODES[2].id)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                >
+                  <div className="node-card-glare" />
+
+                  <div className="node-card-top">
+                    <span className="node-code-badge">{NODES[2].code}</span>
+                    <div className="node-icon-box">{NODES[2].icon}</div>
+                  </div>
+
+                  <div className="node-metric-block">
+                    <span className="node-metric-val">{NODES[2].metricVal}</span>
+                    <span className="node-metric-label">{NODES[2].metricLabel}</span>
+                  </div>
+
+                  <h3 className="node-title">{NODES[2].title}</h3>
+                  <p className="node-desc">{NODES[2].desc}</p>
+
+                  <div className="node-telemetry-strip">
+                    <IconActivity className="telemetry-pulse-icon" />
+                    <span>{NODES[2].telemetry}</span>
+                  </div>
+                </motion.div>
+              </div>
+
+            </motion.div>
           </div>
         </div>
-
       </div>
     </section>
   )
