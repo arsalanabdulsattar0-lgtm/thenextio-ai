@@ -141,7 +141,7 @@ const CATEGORIES = [
   { id: 'security', label: 'Cyber Defense' },
 ]
 
-/* ── Styled Code HUD Visual (replaces broken images) ── */
+/* ── Styled Code HUD Visual ── */
 function ProjectHudVisual({ project }: { project: Project }) {
   return (
     <div className="work-hud-visual" style={{ '--proj-accent': project.accentColor } as React.CSSProperties}>
@@ -173,10 +173,19 @@ function ProjectHudVisual({ project }: { project: Project }) {
         </div>
         <div className="work-hud-code-body">
           {project.codeLines.map((line, i) => (
-            <div key={i} className={`work-hud-line hud-line-${i}`}
-              style={{ animationDelay: `${i * 0.12}s` }}>
+            <div key={i} className="work-hud-line">
               <span className="work-hud-line-num">{String(i + 1).padStart(2, '0')}</span>
-              <span className={`work-hud-line-text ${line.startsWith('  ✓') ? 'is-success' : line.startsWith('  ⚠') ? 'is-warn' : line.startsWith('  →') ? 'is-action' : 'is-cmd'}`}>
+              <span
+                className={`work-hud-line-text ${
+                  line.startsWith('  ✓')
+                    ? 'is-success'
+                    : line.startsWith('  ⚠')
+                    ? 'is-warn'
+                    : line.startsWith('  →')
+                    ? 'is-action'
+                    : 'is-cmd'
+                }`}
+              >
                 {line}
               </span>
             </div>
@@ -218,16 +227,18 @@ export default function OurWork() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  const filteredProjects = activeFilter === 'all'
-    ? PROJECTS
-    : PROJECTS.filter((p) => p.filterTag === activeFilter)
+  const filteredProjects =
+    activeFilter === 'all'
+      ? PROJECTS
+      : PROJECTS.filter((p) => p.filterTag === activeFilter)
 
   const activeProject = filteredProjects[selectedIdx] ?? filteredProjects[0] ?? PROJECTS[0]
 
-  // Scroll progress — section enters at 75% of viewport
+  // ── Scroll Progress across 320vh ──
+  // Starts when section approaches viewport (starts at 75%)
   const { scrollYProgress } = useScroll({
     target: trackRef,
-    offset: ['start 78%', 'end end'],
+    offset: ['start 75%', 'end end'],
   })
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -236,15 +247,19 @@ export default function OurWork() {
     restDelta: 0.001,
   })
 
-  // ── Convergence entrance (0.00 → 0.10) ──
-  const leftX = useTransform(smoothProgress, [0.00, 0.10], [-100, 0])
-  const leftOpacity = useTransform(smoothProgress, [0.00, 0.08], [0, 1])
-  const rightX = useTransform(smoothProgress, [0.00, 0.10], [120, 0])
-  const rightScale = useTransform(smoothProgress, [0.00, 0.10], [0.94, 1])
-  const rightOpacity = useTransform(smoothProgress, [0.00, 0.08], [0, 1])
+  // ── 1. Convergence Entrance (0.00 -> 0.12): Left & Right panels dock into place like About section ──
+  const headerY = useTransform(smoothProgress, [0.00, 0.09], [-24, 0])
+  const headerOpacity = useTransform(smoothProgress, [0.00, 0.07], [0, 1])
 
-  // ── Scroll-driven project switching (0.10 → 1.00) ──
-  const SHOWCASE_START = 0.10
+  const leftX = useTransform(smoothProgress, [0.00, 0.12], [-130, 0])
+  const leftOpacity = useTransform(smoothProgress, [0.00, 0.09], [0, 1])
+
+  const rightX = useTransform(smoothProgress, [0.00, 0.12], [140, 0])
+  const rightScale = useTransform(smoothProgress, [0.00, 0.12], [0.92, 1])
+  const rightOpacity = useTransform(smoothProgress, [0.00, 0.09], [0, 1])
+
+  // ── 2. Scroll-driven project scrubbing (0.12 -> 1.00) ──
+  const SHOWCASE_START = 0.12
   const stepSize = (1.00 - SHOWCASE_START) / filteredProjects.length
 
   useMotionValueEvent(smoothProgress, 'change', (latest) => {
@@ -268,181 +283,174 @@ export default function OurWork() {
     setTabProgress(local)
   })
 
+  // Direct tab click smoothly scrolls to target offset in sticky track
   const handleTabClick = (index: number) => {
     setSelectedIdx(index)
     setTabProgress(0.5)
+    if (isDesktop && trackRef.current) {
+      const trackTop = trackRef.current.getBoundingClientRect().top + window.scrollY
+      const trackHeight = trackRef.current.offsetHeight - window.innerHeight
+      const targetScroll = trackTop + (SHOWCASE_START + index * stepSize + 0.4 * stepSize) * trackHeight
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' })
+    }
   }
 
   return (
-    <section id="projects" ref={trackRef} className="work-section">
-      {/* Background ambient glows */}
-      <div className="work-glow work-glow-left" aria-hidden="true" />
-      <div className="work-glow work-glow-right" aria-hidden="true" />
+    <section id="projects" ref={trackRef} className="work-scroll-track">
+      {/* Sticky Full-Viewport Stage */}
+      <div className="work-sticky-stage">
+        {/* Ambient Glows */}
+        <div className="work-glow work-glow-left" aria-hidden="true" />
+        <div className="work-glow work-glow-right" aria-hidden="true" />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-
-        {/* ── Section Header ── */}
-        <div className="work-header">
+        <div className="work-stage-container">
+          {/* ── Section Header (Scroll Entrance) ── */}
           <motion.div
-            className="section-tag"
-            initial={{ opacity: 0, y: -14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease }}
+            className="work-header"
+            style={isDesktop ? { y: headerY, opacity: headerOpacity } : {}}
           >
-            <span><strong>OUR PROJECTS</strong></span>
+            <div className="section-tag">
+              <span><strong>OUR PROJECTS</strong></span>
+            </div>
+
+            <div className="work-header-row">
+              <div>
+                <h2 className="work-main-title">
+                  Architected for Scale,{' '}
+                  <span className="gradient-text">Engineered for Impact</span>
+                </h2>
+                <p className="work-main-sub">
+                  Production systems engineered for tier-1 enterprises with autonomous AI reasoning and zero-latency pipelines.
+                </p>
+              </div>
+
+              {/* Filter Pills */}
+              <div className="work-filter-pills">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    className={`work-filter-btn ${activeFilter === cat.id ? 'is-active' : ''}`}
+                    onClick={() => {
+                      setActiveFilter(cat.id)
+                      setSelectedIdx(0)
+                      setTabProgress(0)
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
-          <div className="work-header-row">
-            <div>
-              <motion.h2
-                className="work-main-title"
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease, delay: 0.1 }}
-              >
-                Architected for Scale,{' '}
-                <span className="gradient-text">Engineered for Impact</span>
-              </motion.h2>
+          {/* ── Main Scroll-Driven Split Layout (Converges from Left & Right) ── */}
+          <div className="work-split-layout">
+            {/* LEFT COLUMN: Tab navigation with liquid progress (Converges from Left) */}
+            <motion.div
+              className="work-left-col"
+              style={isDesktop ? { x: leftX, opacity: leftOpacity } : {}}
+            >
+              <nav className="work-tabs-nav" aria-label="Project tabs">
+                {filteredProjects.map((project, idx) => {
+                  const isActive = selectedIdx === idx
+                  const fillWidth = isActive
+                    ? Math.round(tabProgress * 100)
+                    : idx < selectedIdx
+                    ? 100
+                    : 0
 
-              <motion.p
-                className="work-main-sub"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease, delay: 0.18 }}
-              >
-                Explore production systems engineered for tier-1 enterprises, combining
-                autonomous AI reasoning, resilient cloud backbones, and zero-latency pipelines.
-              </motion.p>
-            </div>
+                  return (
+                    <div key={project.id} className={`work-tab-item ${isActive ? 'is-active' : ''}`}>
+                      <button
+                        type="button"
+                        className={`work-tab-btn ${isActive ? 'is-active' : ''}`}
+                        onClick={() => handleTabClick(idx)}
+                      >
+                        <div className="work-tab-header-line">
+                          <span className="work-tab-num">{project.num}</span>
+                          {isActive && <span className="work-tab-live-dot" />}
+                        </div>
+                        <span className="work-tab-category">{project.category}</span>
+                        <span className="work-tab-title">{project.title}</span>
 
-            {/* Filter Pills */}
-            <div className="work-filter-pills">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  className={`work-filter-btn ${activeFilter === cat.id ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setActiveFilter(cat.id)
-                    setSelectedIdx(0)
-                    setTabProgress(0)
-                  }}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+                        {/* Liquid scroll progress underline */}
+                        <div className="work-tab-progress-track">
+                          <div
+                            className="work-tab-progress-fill"
+                            style={{ width: `${fillWidth}%` }}
+                          />
+                        </div>
+                      </button>
+                    </div>
+                  )
+                })}
+              </nav>
+            </motion.div>
+
+            {/* RIGHT COLUMN: Project showcase card (Converges from Right) */}
+            <motion.div
+              className="work-right-col"
+              style={isDesktop ? { x: rightX, scale: rightScale, opacity: rightOpacity } : {}}
+            >
+              <div className="work-showcase-card">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id}
+                    className="work-card-inner"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.25, ease }}
+                  >
+                    {/* Project info subcol */}
+                    <div className="work-col-info">
+                      <div className="work-badge-row">
+                        <span className="work-cat-badge">{activeProject.category}</span>
+                        <span className="work-num-pill">DEPLOYMENT #{activeProject.num}</span>
+                      </div>
+
+                      <h3 className="work-project-heading">{activeProject.title}</h3>
+                      <p className="work-project-subhead">{activeProject.subtitle}</p>
+                      <p className="work-project-desc">{activeProject.description}</p>
+
+                      {/* Impact callout */}
+                      <div className="work-impact-box">
+                        <span className="impact-icon">⚡</span>
+                        <span className="impact-text">
+                          <strong>VERIFIED OUTCOME:</strong> {activeProject.impact}
+                        </span>
+                      </div>
+
+                      {/* Tech stack pills */}
+                      <div className="work-stack-list">
+                        {activeProject.techStack.map((tech, i) => (
+                          <span key={i} className="work-tech-pill">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* CTA buttons */}
+                      <div className="work-card-actions">
+                        <Button href="#contact" variant="primary" size="md">
+                          Explore Architecture
+                        </Button>
+                        <Button href="#contact" variant="ghost" fillColor="orange" size="md" icon={false}>
+                          View Case Study
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* HUD Visual subcol */}
+                    <div className="work-col-visual">
+                      <ProjectHudVisual project={activeProject} />
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
           </div>
-        </div>
-
-        {/* ── Main Scroll-Driven Split Layout ── */}
-        <div className="work-split-layout">
-
-          {/* LEFT: Tab navigation with liquid progress */}
-          <motion.div
-            className="work-left-col"
-            style={isDesktop ? { x: leftX, opacity: leftOpacity } : {}}
-          >
-            <nav className="work-tabs-nav" aria-label="Project tabs">
-              {filteredProjects.map((project, idx) => {
-                const isActive = selectedIdx === idx
-                const fillWidth = isActive
-                  ? Math.round(tabProgress * 100)
-                  : idx < selectedIdx ? 100 : 0
-
-                return (
-                  <div key={project.id} className={`work-tab-item ${isActive ? 'is-active' : ''}`}>
-                    <button
-                      type="button"
-                      className={`work-tab-btn ${isActive ? 'is-active' : ''}`}
-                      onClick={() => handleTabClick(idx)}
-                    >
-                      <div className="work-tab-header-line">
-                        <span className="work-tab-num">{project.num}</span>
-                        {isActive && <span className="work-tab-live-dot" />}
-                      </div>
-                      <span className="work-tab-category">{project.category}</span>
-                      <span className="work-tab-title">{project.title}</span>
-
-                      {/* Liquid scroll progress underline */}
-                      <div className="work-tab-progress-track">
-                        <div
-                          className="work-tab-progress-fill"
-                          style={{ width: `${fillWidth}%` }}
-                        />
-                      </div>
-                    </button>
-                  </div>
-                )
-              })}
-            </nav>
-          </motion.div>
-
-          {/* RIGHT: Project showcase card */}
-          <motion.div
-            className="work-right-col"
-            style={isDesktop ? { x: rightX, scale: rightScale, opacity: rightOpacity } : {}}
-          >
-            <div className="work-showcase-card">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeProject.id}
-                  className="work-card-inner"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.28, ease }}
-                >
-                  {/* Project info col */}
-                  <div className="work-col-info">
-                    <div className="work-badge-row">
-                      <span className="work-cat-badge">{activeProject.category}</span>
-                      <span className="work-num-pill">DEPLOYMENT #{activeProject.num}</span>
-                    </div>
-
-                    <h3 className="work-project-heading">{activeProject.title}</h3>
-                    <p className="work-project-subhead">{activeProject.subtitle}</p>
-                    <p className="work-project-desc">{activeProject.description}</p>
-
-                    {/* Impact callout */}
-                    <div className="work-impact-box">
-                      <span className="impact-icon">⚡</span>
-                      <span className="impact-text">
-                        <strong>VERIFIED OUTCOME:</strong> {activeProject.impact}
-                      </span>
-                    </div>
-
-                    {/* Tech stack pills */}
-                    <div className="work-stack-list">
-                      {activeProject.techStack.map((tech, i) => (
-                        <span key={i} className="work-tech-pill">{tech}</span>
-                      ))}
-                    </div>
-
-                    {/* CTA buttons */}
-                    <div className="work-card-actions">
-                      <Button href="#contact" variant="primary" size="md">
-                        Explore Architecture
-                      </Button>
-                      <Button href="#contact" variant="ghost" fillColor="orange" size="md" icon={false}>
-                        View Case Study
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* HUD Visual col */}
-                  <div className="work-col-visual">
-                    <ProjectHudVisual project={activeProject} />
-                  </div>
-
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
         </div>
       </div>
     </section>

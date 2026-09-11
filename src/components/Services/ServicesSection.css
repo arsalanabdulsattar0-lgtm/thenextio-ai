@@ -77,6 +77,11 @@
   justify-content: center;
 }
 
+.services-left-col .section-tag {
+  align-self: flex-start;
+  margin-bottom: 14px;
+}
+
 .services-badge-wrap {
   margin-bottom: 14px;
 }

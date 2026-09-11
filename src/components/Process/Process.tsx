@@ -1,5 +1,5 @@
-import { useState, useRef, MouseEvent } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValueEvent, MotionValue } from 'framer-motion'
 import Button from '../common/Button'
 import './Process.css'
 
@@ -194,245 +194,356 @@ const PROCESS_STAGES: ProcessStage[] = [
   },
 ]
 
+/* ── Words for Headline Scroll Reveal (Products & Showcase 1:1) ── */
+const HEADLINE_WORDS = [
+  { word: 'From', accent: false },
+  { word: 'Raw', accent: false },
+  { word: 'Concept', accent: false },
+  { word: 'to', accent: false },
+  { word: 'Autonomous', accent: true },
+  { word: 'Scale', accent: true },
+]
+
+const WORD_RANGES: [number, number][] = [
+  [0.08, 0.24], // From
+  [0.20, 0.36], // Raw
+  [0.32, 0.48], // Concept
+  [0.44, 0.60], // to
+  [0.56, 0.74], // Autonomous
+  [0.70, 0.88], // Scale
+]
+
+function RevealWord({
+  word,
+  progress,
+  range,
+  isAccent,
+}: {
+  word: string
+  progress: MotionValue<number>
+  range: [number, number]
+  isAccent?: boolean
+}) {
+  const opacity = useTransform(progress, range, [0.12, 1])
+  const y = useTransform(progress, range, [10, 0])
+
+  return (
+    <motion.span
+      className={`process-reveal-word ${isAccent ? 'accent-word' : ''}`}
+      style={{ opacity, y }}
+    >
+      {word}
+    </motion.span>
+  )
+}
+
 export default function Process() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const [activeIdx, setActiveIdx] = useState(0)
+  const [isDesktop, setIsDesktop] = useState(true)
+  const [visibleLogsCount, setVisibleLogsCount] = useState(1)
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth > 991)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   const current = PROCESS_STAGES[activeIdx]
 
-  // 3D Touch Mouse Tilt State
-  const stageRef = useRef<HTMLDivElement>(null)
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, shineX: 50, shineY: 50, active: false })
+  // Terminal streaming simulation on phase change
+  useEffect(() => {
+    setVisibleLogsCount(1)
+    const totalLogs = current.activeConsoleOutput.logs.length
+    let step = 1
+    const interval = setInterval(() => {
+      step += 1
+      setVisibleLogsCount(step)
+      if (step >= totalLogs) {
+        clearInterval(interval)
+      }
+    }, 240)
+    return () => clearInterval(interval)
+  }, [activeIdx, current.activeConsoleOutput.logs.length])
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!stageRef.current) return
-    const rect = stageRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
+  // ── 1. Section Entrance Scroll Reveal (Word-by-Word, Products & Showcase 1:1) ──
+  // Starts when Process section enters 80% of viewport and reveals progressively as user scrolls in
+  const { scrollYProgress: entranceScroll } = useScroll({
+    target: sectionRef,
+    offset: ['start 80%', 'start 15%'],
+  })
 
-    const rx = ((y - centerY) / centerY) * -8
-    const ry = ((x - centerX) / centerX) * 8
-    const shineX = (x / rect.width) * 100
-    const shineY = (y / rect.height) * 100
+  const smoothEntrance = useSpring(entranceScroll, {
+    stiffness: 90,
+    damping: 24,
+    restDelta: 0.001,
+  })
 
-    setTilt({ rx, ry, shineX, shineY, active: true })
-  }
+  const tagOpacity = useTransform(smoothEntrance, [0.02, 0.16], [0.12, 1])
+  const tagY = useTransform(smoothEntrance, [0.02, 0.16], [8, 0])
 
-  const handleMouseLeave = () => {
-    setTilt({ rx: 0, ry: 0, shineX: 50, shineY: 50, active: false })
+  const subOpacity = useTransform(smoothEntrance, [0.45, 0.85], [0.15, 1])
+  const subY = useTransform(smoothEntrance, [0.45, 0.85], [16, 0])
+
+  // ── 2. Sticky Stage Track (ONLY Stepper Rail + Card, Fits 100vh Perfectly!) ──
+  // Begins scrubbing the instant Stepper Rail & Card fit into view at top: 75px (clear of navbar)
+  const { scrollYProgress: stickyScroll } = useScroll({
+    target: trackRef,
+    offset: ['start 75px', 'end end'],
+  })
+
+  const smoothTimeline = useSpring(stickyScroll, {
+    stiffness: 85,
+    damping: 26,
+    restDelta: 0.001,
+  })
+
+  // Timeline line width driven by scroll progress: 0% -> 100%
+  const timelineWidth = useTransform(smoothTimeline, [0.0, 1.0], ['0%', '100%'])
+
+  const stepSize = 1.0 / PROCESS_STAGES.length
+
+  // On scroll, seamlessly update the active phase 01 -> 05
+  useMotionValueEvent(smoothTimeline, 'change', (latest) => {
+    if (!isDesktop) return
+    if (latest <= 0) {
+      setActiveIdx(0)
+      return
+    }
+    const clamped = Math.min(0.9999, Math.max(0, latest))
+    const index = Math.min(
+      PROCESS_STAGES.length - 1,
+      Math.floor(clamped / stepSize)
+    )
+    setActiveIdx(index)
+  })
+
+  // Direct tab click smoothly scrolls sticky track to target phase
+  const handleStepClick = (idx: number) => {
+    setActiveIdx(idx)
+    if (isDesktop && trackRef.current) {
+      const trackTop = trackRef.current.getBoundingClientRect().top + window.scrollY
+      const trackHeight = trackRef.current.offsetHeight - window.innerHeight
+      const targetScroll = trackTop + (idx * stepSize + 0.5 * stepSize) * trackHeight
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' })
+    }
   }
 
   return (
-    <section id="process" className="process-section">
+    <section id="process" ref={sectionRef} className="process-section">
       {/* Background ambient glows (Hero exact) */}
       <div className="process-glow process-glow-left" aria-hidden="true" />
       <div className="process-glow process-glow-right" aria-hidden="true" />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-
-        {/* ── Section Header (Blueritt 1:1 Standard) ── */}
-        <div className="process-header">
-          <motion.div
-            className="section-tag"
-            initial={{ opacity: 0, y: -14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease }}
-          >
-            <span><strong>ENGINEERING LIFECYCLE &amp; PROCESS</strong></span>
-          </motion.div>
-
-          <div className="process-header-grid">
-            <motion.h2
-              className="process-main-title"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease, delay: 0.1 }}
+      {/* ── 1. Section Header: Scrolls into view, reveals, then scrolls up naturally ── */}
+      <div ref={headerRef} className="process-header-wrap">
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="process-header">
+            <motion.div
+              className="section-tag"
+              style={isDesktop ? { opacity: tagOpacity, y: tagY } : {}}
             >
-              From Raw Concept to{' '}
-              <span className="gradient-text">Autonomous Scale</span>
-            </motion.h2>
+              <span><strong>ENGINEERING LIFECYCLE &amp; PROCESS</strong></span>
+            </motion.div>
 
-            <motion.p
-              className="process-main-sub"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease, delay: 0.18 }}
-            >
-              A deterministic, 5-stage engineering methodology designed for predictable delivery,
-              zero architectural debt, and enterprise-grade resilience under extreme load.
-            </motion.p>
+            <div className="process-header-grid">
+              <h2 className="process-main-title">
+                {HEADLINE_WORDS.map((item, idx) => (
+                  <RevealWord
+                    key={idx}
+                    word={item.word}
+                    progress={smoothEntrance}
+                    range={WORD_RANGES[idx]}
+                    isAccent={item.accent}
+                  />
+                ))}
+              </h2>
+
+              <motion.p
+                className="process-main-sub"
+                style={isDesktop ? { opacity: subOpacity, y: subY } : {}}
+              >
+                A deterministic, 5-stage engineering methodology designed for predictable delivery,
+                zero architectural debt, and enterprise-grade resilience under extreme load.
+              </motion.p>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* ── Interactive Milestone Stepper Rail ── */}
-        <div className="process-stepper-rail">
-          {PROCESS_STAGES.map((stage, idx) => {
-            const isActive = idx === activeIdx
-            const isCompleted = idx < activeIdx
-            return (
-              <button
-                key={stage.id}
-                type="button"
-                className={`process-step-node ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}`}
-                onClick={() => setActiveIdx(idx)}
-              >
-                <div className="node-indicator">
-                  <span className="node-num">{stage.num}</span>
-                  <span className="node-dot" />
-                </div>
-                <div className="node-info">
-                  <span className="node-stage-lbl">PHASE 0{idx + 1}</span>
-                  <span className="node-title">{stage.title}</span>
-                </div>
-                {isActive && (
-                  <motion.div
-                    className="node-active-glow"
-                    layoutId="stepperActiveGlow"
-                    transition={{ duration: 0.35, ease }}
-                  />
-                )}
-              </button>
-            )
-          })}
-        </div>
+      {/* ── 2. Sticky Stage Track: ONLY the Stepper Rail + Card! (Fits 100vh with ZERO cropping!) ── */}
+      <div ref={trackRef} className="process-sticky-track">
+        <div className="process-sticky-stage">
+          <div className="container" style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* ── VIP 3D INTERACTIVE PROCESS STAGE (Mouse Tilt) ── */}
-        <div className="process-3d-stage">
-          <motion.div
-            ref={stageRef}
-            className="process-3d-card"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-              transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-              transition: tilt.active ? 'transform 0.08s ease-out' : 'transform 0.5s ease-out',
-            }}
-          >
-            {/* Holographic Mouse Glare Layer */}
-            <div
-              className="process-3d-glare"
-              style={{
-                background: `radial-gradient(circle 500px at ${tilt.shineX}% ${tilt.shineY}%, rgba(255, 255, 255, 0.09) 0%, transparent 80%)`,
-                opacity: tilt.active ? 1 : 0,
-              }}
-              aria-hidden="true"
-            />
-
-            {/* Top Terminal Status Header */}
-            <div className="process-card-header">
-              <div className="process-mac-dots">
-                <span className="pdot pdot-red" />
-                <span className="pdot pdot-yellow" />
-                <span className="pdot pdot-green" />
-                <span className="process-terminal-path">
-                  pipeline/lifecycle/{current.id}/execution.log
-                </span>
+            {/* Stepper Rail */}
+            <div className="process-stepper-wrap">
+              <div className="process-pipeline-track" aria-hidden="true">
+                <div className="process-pipeline-line-bg" />
+                <motion.div
+                  className="process-pipeline-line-fill"
+                  style={{
+                    width: isDesktop ? timelineWidth : `${(activeIdx / (PROCESS_STAGES.length - 1)) * 100}%`,
+                  }}
+                />
               </div>
-              <div className="process-status-pill">
-                <span className="process-ping-dot" />
-                <span>{current.activeConsoleOutput.status}</span>
+
+              <div className="process-stepper-rail">
+                {PROCESS_STAGES.map((stage, idx) => {
+                  const isActive = idx === activeIdx
+                  const isCompleted = idx < activeIdx
+                  return (
+                    <button
+                      key={stage.id}
+                      type="button"
+                      className={`process-step-node ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}`}
+                      onClick={() => handleStepClick(idx)}
+                    >
+                      <div className="node-indicator">
+                        <span className="node-num">{stage.num}</span>
+                        <span className="node-dot" />
+                      </div>
+                      <div className="node-info">
+                        <span className="node-stage-lbl">PHASE 0{idx + 1}</span>
+                        <span className="node-title">{stage.title}</span>
+                      </div>
+                      {isActive && (
+                        <motion.div
+                          className="node-active-glow"
+                          layoutId="stepperActiveGlow"
+                          transition={{ duration: 0.35, ease }}
+                        />
+                      )}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                className="process-card-content"
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.45, ease }}
-              >
-                {/* 2-Column VIP Process Stage Layout */}
-                <div className="process-grid-body">
-
-                  {/* Left Column: Stage Narrative & Deliverables */}
-                  <div className="process-col-info">
-                    <div className="process-phase-badge">
-                      <span>PHASE #{current.num}</span>
-                      <span className="badge-sep">•</span>
-                      <span>{current.subtitle}</span>
-                    </div>
-
-                    <h3 className="process-stage-heading">{current.title}</h3>
-                    <p className="process-stage-desc">{current.description}</p>
-
-                    {/* Deliverables Checklist Grid */}
-                    <div className="process-deliverables-box">
-                      <span className="deliv-header-title">PROVABLE DELIVERABLES &amp; ARTIFACTS</span>
-                      <div className="deliv-list">
-                        {current.deliverables.map((deliv, i) => (
-                          <div key={i} className="deliv-item">
-                            <span className="deliv-check">✓</span>
-                            <span className="deliv-text">{deliv}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Stage Metrics Grid */}
-                    <div className="process-metrics-grid">
-                      {current.stageMetrics.map((m, i) => (
-                        <div key={i} className="process-metric-card">
-                          <span className="pmetric-val">{m.value}</span>
-                          <span className="pmetric-lbl">{m.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons using common Button component */}
-                    <div className="process-actions-row">
-                      <Button href="#contact" variant="primary" size="md">
-                        Start an Architecture Audit ↗
-                      </Button>
-                      <Button href="#contact" variant="ghost" fillColor="orange" size="md" icon={false}>
-                        Schedule Technical Deep-Dive
-                      </Button>
-                    </div>
+            {/* VIP Card */}
+            <div className="process-stage-container">
+              <div className="process-stage-card">
+                {/* Top Terminal Status Header */}
+                <div className="process-card-header">
+                  <div className="process-mac-dots">
+                    <span className="pdot pdot-red" />
+                    <span className="pdot pdot-yellow" />
+                    <span className="pdot pdot-green" />
+                    <span className="process-terminal-path">
+                      pipeline/lifecycle/{current.id}/execution.log
+                    </span>
                   </div>
-
-                  {/* Right Column: Live Terminal Execution & Verification Checklist */}
-                  <div className="process-col-console">
-                    {/* Terminal Simulation */}
-                    <div className="process-terminal-window">
-                      <div className="pterm-bar">
-                        <span className="pterm-cmd-icon">&gt;</span>
-                        <span className="pterm-cmd-text">{current.activeConsoleOutput.command}</span>
-                      </div>
-                      <div className="pterm-logs">
-                        {current.activeConsoleOutput.logs.map((log, i) => (
-                          <div key={i} className="pterm-log-line">
-                            <span className="log-arrow">&gt;&gt;</span>
-                            <span>{log}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Verification Protocol Box */}
-                    <div className="process-verification-box">
-                      <span className="verif-title">GATEWAY VERIFICATION PROTOCOL</span>
-                      <div className="verif-items">
-                        {current.verificationChecklist.map((check, i) => (
-                          <div key={i} className="verif-row">
-                            <span className="verif-shield">🛡️</span>
-                            <span className="verif-text">{check}</span>
-                            <span className="verif-badge">PASSED</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  <div className="process-status-pill">
+                    <span className="process-ping-dot" />
+                    <span>{current.activeConsoleOutput.status}</span>
                   </div>
-
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        </div>
 
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={current.id}
+                    className="process-card-content"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.35, ease }}
+                  >
+                    {/* 2-Column VIP Process Stage Layout */}
+                    <div className="process-grid-body">
+
+                      {/* Left Column: Stage Narrative & Deliverables */}
+                      <div className="process-col-info">
+                        <div className="process-phase-badge">
+                          <span>PHASE #{current.num}</span>
+                          <span className="badge-sep">•</span>
+                          <span>{current.subtitle}</span>
+                        </div>
+
+                        <h3 className="process-stage-heading">{current.title}</h3>
+                        <p className="process-stage-desc">{current.description}</p>
+
+                        {/* Deliverables Checklist Grid */}
+                        <div className="process-deliverables-box">
+                          <span className="deliv-header-title">PROVABLE DELIVERABLES &amp; ARTIFACTS</span>
+                          <div className="deliv-list">
+                            {current.deliverables.map((deliv, i) => (
+                              <div key={i} className="deliv-item">
+                                <span className="deliv-check">✓</span>
+                                <span className="deliv-text">{deliv}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Stage Metrics Grid */}
+                        <div className="process-metrics-grid">
+                          {current.stageMetrics.map((m, i) => (
+                            <div key={i} className="process-metric-card">
+                              <span className="pmetric-val">{m.value}</span>
+                              <span className="pmetric-lbl">{m.label}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Single Unified Contact Us Action Button */}
+                        <div className="process-actions-row">
+                          <Button href="#contact" variant="ghost" fillColor="orange" size="md">
+                            Contact Us
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Right Column: Live Terminal Execution & Verification Checklist */}
+                      <div className="process-col-console">
+                        {/* Terminal Simulation with Live Streaming Effect */}
+                        <div className="process-terminal-window">
+                          <div className="pterm-bar">
+                            <span className="pterm-cmd-icon">&gt;</span>
+                            <span className="pterm-cmd-text">{current.activeConsoleOutput.command}</span>
+                          </div>
+                          <div className="pterm-logs">
+                            {current.activeConsoleOutput.logs.slice(0, visibleLogsCount).map((log, i) => (
+                              <motion.div
+                                key={`${activeIdx}-${i}`}
+                                className="pterm-log-line"
+                                initial={{ opacity: 0, x: -6 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                <span className="log-arrow">&gt;&gt;</span>
+                                <span>{log}</span>
+                              </motion.div>
+                            ))}
+                            <span className="pterm-cursor" aria-hidden="true" />
+                          </div>
+                        </div>
+
+                        {/* Verification Protocol Box */}
+                        <div className="process-verification-box">
+                          <span className="verif-title">GATEWAY VERIFICATION PROTOCOL</span>
+                          <div className="verif-items">
+                            {current.verificationChecklist.map((check, i) => (
+                              <div key={i} className="verif-row">
+                                <span className="verif-shield">🛡️</span>
+                                <span className="verif-text">{check}</span>
+                                <span className="verif-badge">PASSED</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </section>
   )

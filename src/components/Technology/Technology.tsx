@@ -202,7 +202,7 @@ export default function Technology() {
   }
 
   return (
-    <section id="technology" className="tech-section">
+    <section id="showcase" className="tech-section">
       {/* Background ambient glows (Hero exact) */}
       <div className="tech-glow tech-glow-left" aria-hidden="true" />
       <div className="tech-glow tech-glow-right" aria-hidden="true" />
@@ -218,7 +218,7 @@ export default function Technology() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease }}
           >
-            <span><strong>ENTERPRISE TECHNOLOGY STACK</strong></span>
+            <span><strong>OUR SHOWCASE</strong></span>
           </motion.div>
 
           <div className="tech-header-grid">
@@ -229,8 +229,8 @@ export default function Technology() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease, delay: 0.1 }}
             >
-              The Neural &amp; Cloud Backbone{' '}
-              <span className="gradient-text">Behind Every Build</span>
+              Architected for Scale,{' '}
+              <span className="gradient-text">Engineered for Impact</span>
             </motion.h2>
 
             <motion.p
@@ -240,8 +240,8 @@ export default function Technology() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease, delay: 0.18 }}
             >
-              We combine enterprise foundation models, distributed Kubernetes backbones,
-              and low-latency streaming protocols to build resilient architectures that thrive under extreme scale.
+              Explore our core technical architectures and production systems, engineered with
+              autonomous AI reasoning, resilient multi-cloud backbones, and zero-latency data pipelines.
             </motion.p>
           </div>
         </div>
@@ -283,13 +283,10 @@ export default function Technology() {
               })}
             </div>
 
-            {/* Quick Actions using common Button component */}
+            {/* Quick Action using common Button component */}
             <div className="tech-actions-box">
-              <Button href="#contact" variant="primary" size="md">
-                Deploy Architecture ↗
-              </Button>
-              <Button href="#projects" variant="ghost" fillColor="orange" size="md" icon={false}>
-                View Production Case Studies
+              <Button href="#contact" variant="ghost" fillColor="orange" size="md">
+                Contact Us
               </Button>
             </div>
           </div>

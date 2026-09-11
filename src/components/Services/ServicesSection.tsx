@@ -170,42 +170,106 @@ const SERVICES_SHOWCASE_DATA: ServiceTabItem[] = [
   },
 ]
 
-/* ── Pure Scroll-Driven Live Terminal Build Component ── */
-function LiveTerminalMockup({ mockup, progress = 1 }: { mockup: ServiceTabItem['mockup']; progress?: number }) {
-  // Query Bubble pops in during early scroll (progress 0.04 -> 0.12)
-  const isBubbleVisible = progress >= 0.04
-  const bubbleY = progress < 0.12 ? Math.max(0, 8 * (1 - progress / 0.12)) : 0
+/* ── Live Typing & Progressive Build Mockup Component ── */
+function LiveTerminalMockup({ mockup }: { mockup: ServiceTabItem['mockup'] }) {
+  const [phase, setPhase] = useState<'idle' | 'bubble' | 'card' | 'typing' | 'checks' | 'complete'>('idle')
+  const [displayedCode, setDisplayedCode] = useState('')
+  const [showCheck1, setShowCheck1] = useState(false)
+  const [showCheck2, setShowCheck2] = useState(false)
 
-  // Terminal card appears right after bubble
-  const isCardVisible = progress >= 0.08
+  useEffect(() => {
+    let isCancelled = false
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+    let typingTimer: ReturnType<typeof setInterval> | null = null
 
-  // Code scrubbing between progress 0.12 and 0.70
-  const typingStart = 0.12
-  const typingEnd = 0.70
-  const codeProgress = Math.max(0, Math.min(1, (progress - typingStart) / (typingEnd - typingStart)))
-  const totalChars = mockup.codeSnippet.length
-  const charCount = Math.floor(codeProgress * totalChars)
-  const displayedCode = mockup.codeSnippet.slice(0, charCount)
-  const isTyping = progress >= typingStart && progress < typingEnd
+    // Reset state on mockup change
+    setPhase('idle')
+    setDisplayedCode('')
+    setShowCheck1(false)
+    setShowCheck2(false)
 
-  // Sequential Checkmarks lock in with scroll
-  const showCheck1 = progress >= 0.70
-  const showCheck2 = progress >= 0.84
+    function startCycle() {
+      if (isCancelled) return
+
+      // Phase 1: Query bubble appears (150ms)
+      timeoutId = setTimeout(() => {
+        if (isCancelled) return
+        setPhase('bubble')
+
+        // Phase 2: Terminal card appears (450ms later)
+        timeoutId = setTimeout(() => {
+          if (isCancelled) return
+          setPhase('card')
+
+          // Phase 3: Start live typing (300ms later)
+          timeoutId = setTimeout(() => {
+            if (isCancelled) return
+            setPhase('typing')
+
+            const fullText = mockup.codeSnippet
+            let currentLength = 0
+
+            typingTimer = setInterval(() => {
+              if (isCancelled) {
+                if (typingTimer) clearInterval(typingTimer)
+                return
+              }
+
+              currentLength += 1
+              setDisplayedCode(fullText.slice(0, currentLength))
+
+              if (currentLength >= fullText.length) {
+                if (typingTimer) clearInterval(typingTimer)
+                setPhase('checks')
+
+                // Checkmark 1 appears (350ms later)
+                timeoutId = setTimeout(() => {
+                  if (isCancelled) return
+                  setShowCheck1(true)
+
+                  // Checkmark 2 appears (350ms later)
+                  timeoutId = setTimeout(() => {
+                    if (isCancelled) return
+                    setShowCheck2(true)
+                    setPhase('complete')
+
+                    // Stay complete for 2.8 seconds, then restart!
+                    timeoutId = setTimeout(() => {
+                      if (isCancelled) return
+                      setDisplayedCode('')
+                      setShowCheck1(false)
+                      setShowCheck2(false)
+                      startCycle()
+                    }, 2800)
+                  }, 350)
+                }, 350)
+              }
+            }, 22)
+          }, 300)
+        }, 450)
+      }, 150)
+    }
+
+    startCycle()
+
+    return () => {
+      isCancelled = true
+      if (timeoutId) clearTimeout(timeoutId)
+      if (typingTimer) clearInterval(typingTimer)
+    }
+  }, [mockup])
 
   return (
     <div className="services-mockup-subcol">
       {/* 1. Floating User Query Bubble */}
-      <div 
-        className={`services-query-wrap ${isBubbleVisible ? 'is-visible' : ''}`}
-        style={{ transform: `translateY(${bubbleY}px)` }}
-      >
+      <div className={`services-query-wrap ${phase !== 'idle' ? 'is-visible' : ''}`}>
         <div className="services-query-bubble">
           <span className="services-query-text">{mockup.userQuery}</span>
         </div>
       </div>
 
       {/* 2. Main Terminal Card */}
-      <div className={`services-terminal-wrap ${isCardVisible ? 'is-visible' : ''}`}>
+      <div className={`services-terminal-wrap ${phase !== 'idle' && phase !== 'bubble' ? 'is-visible' : ''}`}>
         <div className="services-terminal-card">
           <div className="services-terminal-header">
             <span className="services-terminal-status-text">
@@ -226,12 +290,12 @@ function LiveTerminalMockup({ mockup, progress = 1 }: { mockup: ServiceTabItem['
               {mockup.engineSub}
             </p>
 
-            {/* Code Snippet Block with Live Scroll Typing */}
+            {/* Code Snippet Block with Live Typing */}
             <div className="services-code-block">
               <pre>
                 <code>
                   {displayedCode}
-                  {isTyping && <span className="typing-cursor">_</span>}
+                  {phase === 'typing' && <span className="typing-cursor">_</span>}
                 </code>
               </pre>
             </div>
@@ -349,6 +413,11 @@ export default function ServicesSection() {
               className="services-left-col"
               style={isDesktop ? { x: leftColX, opacity: leftColOpacity } : {}}
             >
+              {/* Section Tag */}
+              <div className="section-tag" style={{ width: 'fit-content', marginBottom: '14px' }}>
+                <span><strong>OUR SERVICES</strong></span>
+              </div>
+
               {/* Diamond Spark Icon */}
               <div className="services-badge-wrap">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="services-badge-icon">
@@ -443,8 +512,8 @@ export default function ServicesSection() {
                       </div>
                     </div>
 
-                    {/* Right Sub-Column: Pure Scroll-Driven Live Terminal Build */}
-                    <LiveTerminalMockup mockup={currentService.mockup} progress={isDesktop ? tabProgress : 1} />
+                    {/* Right Sub-Column: Autonomous Live Terminal Build */}
+                    <LiveTerminalMockup mockup={currentService.mockup} />
 
                   </motion.div>
                 </AnimatePresence>

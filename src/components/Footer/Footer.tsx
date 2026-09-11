@@ -6,9 +6,9 @@ import './Footer.css'
 const ease = [0.22, 1, 0.36, 1] as const
 
 const NAV_LINKS = [
-  { label: 'PLATFORM', href: '#services' },
-  { label: 'PROJECTS', href: '#projects' },
-  { label: 'TECHNOLOGY', href: '#technology' },
+  { label: 'SERVICES', href: '#services' },
+  { label: 'PRODUCTS', href: '#products' },
+  { label: 'SHOWCASE', href: '#showcase' },
   { label: 'PROCESS', href: '#process' },
   { label: 'ABOUT', href: '#about' },
   { label: 'CONTACT', href: '#contact' },

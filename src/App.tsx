@@ -3,10 +3,9 @@ import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import FlowField from './components/FlowField/FlowField'
 import About from './components/About/About'
-import ServicesSection from './components/Services/ServicesSection'
-import PlatformSection from './components/Platform/PlatformSection'
-import OurWork from './components/OurWork/OurWork'
-import Technology from './components/Technology/Technology'
+import Services from './components/Services/Services'
+import Products from './components/Products/Products'
+import Showcase from './components/Showcase/Showcase'
 import Process from './components/Process/Process'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
@@ -49,26 +48,25 @@ export default function App() {
       <main>
         {view === 'home' ? (
           <>
-            {/* 1. HERO: Rotating Capabilities Dashboard (Includes Integrated Clients Logo Strip) */}
+            {/* 1. HERO */}
             <Hero />
 
-            {/* 2. ABOUT: 3D Stacking & Architecture Core */}
+            {/* 2. ABOUT */}
             <About />
 
-            {/* 4. SERVICES: Unified 6-Module Technical Capabilities */}
-            <ServicesSection />
+            {/* 3. SERVICES */}
+            <Services />
 
-            {/* 5. PRODUCTS: Enterprise AI & Cloud Product Platform */}
-            <PlatformSection />
+            {/* 4. PRODUCTS */}
+            <Products />
 
-            {/* 6. PROJECTS: Case Studies & Production Architectures */}
-            <OurWork />
+            {/* 5. SHOWCASE */}
+            <Showcase />
 
-            {/* 7. TECHNOLOGY & PROCESS */}
-            <Technology />
+            {/* 6. PROCESS */}
             <Process />
 
-            {/* 8. CONTACT: Consultation & Project Scope */}
+            {/* 7. CONTACT */}
             <Contact />
           </>
         ) : (
@@ -76,7 +74,7 @@ export default function App() {
             {/* ABOUT VIEW: 3D FlowField Experience */}
             <FlowField theme="blueritt" />
             <About />
-            <Technology />
+            <Showcase />
             <Contact />
           </>
         )}
